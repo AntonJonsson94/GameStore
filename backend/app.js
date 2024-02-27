@@ -5,8 +5,9 @@ var logger = require('morgan');
 const mongoose = require('mongoose');
 const MONGO_URI = 'mongodb://localhost/gamestore';
 
-var indexRouter = require('./routes/index');
-var usersRouter = require('./routes/users');
+let indexRouter = require('./routes/index');
+let usersRouter = require('./routes/users');
+let gamesRouter = require('./routes/games');
 
 var app = express();
 
@@ -29,5 +30,6 @@ app.use(express.static(path.join(__dirname, 'public')));
 
 app.use('/', indexRouter);
 app.use('/users', usersRouter);
+app.use("/games", gamesRouter);
 
 module.exports = app;
