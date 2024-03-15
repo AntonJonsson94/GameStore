@@ -24,7 +24,7 @@ export async function GET(req: NextRequest, res: NextResponse) {
       })
       .then((data) => {
         const rawgGameDetailsRes = fetch(
-          `https://api.rawg.io/api/games/${data.id}?key=293fa5434208443090a97049f7bb9ce7`
+          `https://api.rawg.io/api/games/${data.id}?key=`
         );
         const gameDetails = await rawgGameDetailsRes.json();
       })
