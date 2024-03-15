@@ -8,13 +8,13 @@ export async function GET(req: NextRequest, res: NextResponse) {
   const cheapsharkData = await cheapshark.json();
 
   const rawgRes = await fetch(
-    `https://api.rawg.io/api/games?key=6d2b34facc194d9eb23d8be8cd6f1d9a&search=${cheapsharkData[0].title}&search_exact=1`
+    `https://api.rawg.io/api/games?key=${process.env.API_KEY}&search=${cheapsharkData[0].title}&search_exact=1`
   );
   const rawgData = await rawgRes.json();
 
   cheapsharkData.forEach((deal) => {
     const rawg = fetch(
-      `https://api.rawg.io/api/games?key=6d2b34facc194d9eb23d8be8cd6f1d9a&search=${deal.title}&search_exact=1`
+      `https://api.rawg.io/api/games?key=${process.env.API_KEY}&search=${deal.title}&search_exact=1`
     )
       .then((res) => {
         if (!res.ok) {
@@ -24,7 +24,7 @@ export async function GET(req: NextRequest, res: NextResponse) {
       })
       .then((data) => {
         const rawgGameDetailsRes = fetch(
-          `https://api.rawg.io/api/games/${data.id}?key=`
+          `https://api.rawg.io/api/games/${data.id}?key=${process.env.API_KEY}`
         );
         const gameDetails = await rawgGameDetailsRes.json();
       })
