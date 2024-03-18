@@ -1,6 +1,7 @@
-mongoose = require("mongoose");
+import mongoose from "mongoose";
+const Schema = mongoose.Schema;
 
-const DealSchema = new mongoose.Scehma({
+const DealSchema = new Schema({
   id: String,
   name: String,
   price: Number,
@@ -9,7 +10,7 @@ const DealSchema = new mongoose.Scehma({
   store_id: String,
 });
 
-const GameSchema = new mongoose.Scehma({
+const GameSchema = new Schema({
   id: String,
   long_desc: String,
   lowest_price: Number,
@@ -21,16 +22,20 @@ const GameSchema = new mongoose.Scehma({
   cheapChark_id: String,
 });
 
-const StoreSchema = new mongoose.Scehma({
+const StoreSchema = new Schema({
   id: String,
   name: String,
   image_url: String,
 });
 
-//
+// Create models from the schemas
+const Deal = mongoose.model("Deal", DealSchema);
+const Game = mongoose.model("Game", GameSchema);
+const Store = mongoose.model("Store", StoreSchema);
 
-module.exports = mongoose.module(
-  { game: DealSchema },
-  { Game: GameSchema },
-  { Store: StoreSchema }
-);
+// Export the models
+module.exports = {
+  Deal,
+  Game,
+  Store,
+};
