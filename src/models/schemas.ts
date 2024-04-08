@@ -19,14 +19,14 @@ const StoreOfferSchema = new Schema<IStoreOffer>({
 
 const GameSchema = new Schema<IGame>(
   {
-    cheap_shark_id: String,
-    description: String,
-    lowest_price: String,
-    metacritic_score: String,
     title: String,
-    release_date: String,
-    screenshots: [ScreenshotSchema],
+    description: String,
     splash_art: String,
+    lowest_price: String,
+    release_date: String,
+    metacritic_score: String,
+    cheap_shark_id: String,
+    screenshots: [ScreenshotSchema],
     storeOffers: [StoreOfferSchema]
   },
   {

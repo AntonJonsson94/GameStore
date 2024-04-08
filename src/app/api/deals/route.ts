@@ -1,9 +1,8 @@
-const dbConnect = require("../../lib/dbConnect");
-
-import { ICheapSharkGame, IGame } from "@/app/models/interfaces";
-import { cheapSharkFiveDeals, cheapSharkFiveFreeGames } from "../../utils/apiRequests";
-import { Game} from "@/app/models/schemas";
-import { createGame } from "@/app/services/createGames";
+import { IGame, ICheapSharkGame } from "@/models/interfaces";
+import { Game } from "@/models/schemas";
+import { createGame } from "@/services/createGames";
+import { cheapSharkFiveFreeGames, cheapSharkFiveDeals } from "@/utils/apiRequests";
+const dbConnect = require('@/lib/dbConnect')
 
 export async function GET() {
   try {

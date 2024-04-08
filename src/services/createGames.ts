@@ -1,6 +1,7 @@
-import { ICheapSharkGame, IRawgGame } from "../models/interfaces";
-import { Game, } from "../models/schemas";
-import { cheapSharkGameFromId, rawgSearchGameFromTitle, rawgGameFromID, rawgScreenshots } from "../utils/apiRequests";
+import { ICheapSharkGame, IRawgGame } from "@/models/interfaces";
+import { Game } from "@/models/schemas";
+import { rawgSearchGameFromTitle, rawgScreenshots, cheapSharkGameFromId, rawgGameFromID } from "@/utils/apiRequests";
+
 
 export async function createGame(cheapSharkGame: ICheapSharkGame) {
 
