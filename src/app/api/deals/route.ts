@@ -1,74 +1,98 @@
-import dbConnect from "@/app/lib/dbConnect";
-import { NextRequest, NextResponse } from "next/server";
+const dbConnect = require("../../lib/dbConnect");
 
+import {
+  fetchFreeGames,
+  fetchHighRatedDeals,
+  fetchRawgGameDetails,
+  fetchRawgGame,
+  fetchRawgGameScreenshots,
+} from "../../utils/apiRequests";
 const { Game } = require("../../models/schemas");
-export async function GET(req: NextRequest, res: NextResponse) {
-  await dbConnect();
 
-  const gamesToDisplay = [];
+export async function GET() {
+  try {
+    await dbConnect();
 
-  const freeGames = await fetch(
-    "https://www.cheapshark.com/api/1.0/deals?sortBy=Price&limit=5"
-  )
-    .then((res) => res.json())
-    .then((data) => {
-      return data;
+    const gamesToDisplay = [];
+
+    const freeGames = await fetchFreeGames();
+
+    freeGames.forEach((game) => {
+      if (game.salePrice === "0.00") {
+        gamesToDisplay.push(game);
+      }
     });
 
-  for (const deal of freeGames) {
-    console.log(deal);
-    if (deal.price == 0) {
-      gamesToDisplay.push(deal);
-    }
-  }
-
-  const highRatedDeals = await fetch(
-    "https://www.cheapshark.com/api/1.0/deals?&pageSize=5"
-  )
-    .then((res) => res.json())
-    .then((data) => {
-      return data;
+    const highestDealRatedGames = await fetchHighRatedDeals();
+    highestDealRatedGames.forEach((game) => {
+      if (game.dealRating === "10.0") {
+        gamesToDisplay.push(game);
+      }
     });
 
-  const highestRatedDealsToShow = highRatedDeals
-    .filter((deal) => deal.dealRating == 10)
-    .slice(0, 5 - gamesToDisplay.length);
+    const uniqueGames = Array.from(
+      new Set(gamesToDisplay.map((game) => game.title))
+    )
+      .map((title) => gamesToDisplay.find((game) => game.title === title))
+      .slice(0, 5);
 
-  gamesToDisplay.push(...highestRatedDealsToShow);
-  console.log("top 5", gamesToDisplay);
+    // console.log("Top 5", uniqueGames);
 
-  const gameDetails = [];
-
-  for (const deal of gamesToDisplay) {
-    const rawgRes = await fetch(
-      `https://api.rawg.io/api/games?key=${process.env.API_KEY}&search=${deal.title}&search_exact=1`
-    );
-    const rawgData = await rawgRes.json();
-
-    console.log("rawgresponse", rawgData);
-
-    const gameDetailsRes = await fetch(
-      `https://api.rawg.io/api/games/${rawgData.id}?key=${process.env.API_KEY}`
-    );
-    const rawgGameDetails = await gameDetailsRes.json();
-
-    console.log("rawgGameDetails", rawgGameDetails);
-
-    gameDetails.push(rawgGameDetails);
-
-    const existingGame = await Game.findOne({
-      cheapChark_id: deal.cheapChark_id,
-    });
-    if (!existingGame) {
+    for (const game of uniqueGames) {
       try {
-        const newGame = await Game.create({
-          ...rawgGameDetails,
-          cheapChark_id: deal.cheapChark_id,
+        const rawgGame = await fetchRawgGame(game.title);
+
+        const rawgGameScreenshots = await fetchRawgGameScreenshots(
+          rawgGame.results[0].slug
+        );
+
+        const gameDetails = await fetchRawgGameDetails(rawgGame.results[0].id);
+
+        const combinedGame = {
+          ...game,
+          ...gameDetails,
+          ...rawgGameScreenshots,
+        };
+        console.log("this is one game");
+        console.log(combinedGame);
+
+        const GameModel = {
+          id: combinedGame.id,
+          name: combinedGame.name,
+          description: combinedGame.description,
+          lowest_price: combinedGame.salePrice,
+          deals: game,
+          screenshots: rawgGameScreenshots,
+          release_date: combinedGame.released,
+          cheapChark_id: combinedGame.dealID,
+          background_image: combinedGame.background_image,
+          metacritic: combinedGame.metacritic,
+          publishers: combinedGame.publishers,
+        };
+
+        const existingGame = await Game.findOne({
+          cheapChark_id: game.dealID,
         });
-        console.log("Game saved successfully:", newGame);
+
+        if (!existingGame) {
+          try {
+            const newGame = await Game.create(GameModel);
+            console.log("Game saved successfully:", newGame);
+            const populatedGame = await Game.findById(newGame._id).populate(
+              "games"
+            );
+            return populatedGame;
+          } catch (error) {
+            console.error("Error saving game:", error);
+            return null;
+          }
+        }
       } catch (error) {
-        console.error("Error saving game:", error);
+        console.error(`Error processing game ${game.title}:`, error);
+        return null;
       }
     }
+  } catch (error) {
+    console.error(error);
   }
 }
