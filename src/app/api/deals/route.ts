@@ -1,9 +1,6 @@
 const dbConnect = require("../../lib/dbConnect");
 
-import {
-  cheapSharkFiveFreeGames,
-  cheapSharkFiveDeals,
-} from "../../utils/apiRequests";
+import { cheapSharkFiveDeals, cheapSharkFiveFreeGames } from "../../utils/apiRequests";
 import { createGame } from "@/app/services/createGames";
 
 export async function GET() {
