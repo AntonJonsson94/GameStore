@@ -49,6 +49,13 @@ export interface ICheapSharkGame {
   dealRating: string;
   thumb: string;
 }
+const ScreenshotSchema = new Schema( {
+  id: String,
+  image: String,
+  width: String,
+  height: String, 
+  is_deleted: Boolean
+})
 const StoreOfferSchema = new Schema<IStoreOffer>({
   id: String,
   name: String,
@@ -66,7 +73,7 @@ const GameSchema = new Schema<IGame>(
     metacritic_score: String,
     title: String,
     release_date: String,
-    screenshots: [String],
+    screenshots: [ScreenshotSchema],
     splash_art: String,
     storeOffers: [StoreOfferSchema]
   },

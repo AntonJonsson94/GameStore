@@ -12,8 +12,7 @@ export async function createGame(cheapSharkGame: ICheapSharkGame) {
 
     const screenshots = screenshotRes.results
     const rawgGame:IRawgGame = await rawgGameFromID(searchResultRawg.results[0].id);
-    const newGame:IGame = {
-      id: "1",
+    const newGame = new Game ({
       title: cheapSharkGame.title,
       cheap_shark_id: cheapSharkGame.gameID,
       description: rawgGame.description,
@@ -24,6 +23,7 @@ export async function createGame(cheapSharkGame: ICheapSharkGame) {
       screenshots: screenshots,
       splash_art: rawgGame.background_image,
       storeOffers: cheapSharkGameWithDeals.deals
-    }
+    })
+    await newGame.save()
     return newGame
 }
