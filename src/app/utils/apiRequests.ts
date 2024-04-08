@@ -2,66 +2,26 @@ const fetcher = (url:string) => {
   return fetch(url).then(res => res.json())
 }
 
-export async function fetchFreeGames() {
-  const response = fetch(
-    "https://www.cheapshark.com/api/1.0/deals?sortBy=Price&pageSize=5"
-  )
-    .then((res) => res.json())
-    .then((data) => {
-      return data;
-    });
-  return await response;
+export async function cheapSharkFiveFreeGames() {
+  return await fetcher("https://www.cheapshark.com/api/1.0/deals?sortBy=Price&pageSize=5")
 }
 
-export async function fetchHighRatedDeals() {
-  const response = fetch(`https://www.cheapshark.com/api/1.0/deals?&pageSize=5`)
-    .then((res) => res.json())
-    .then((data) => {
-      return data;
-    });
-  return await response;
+export async function cheapSharkFiveDeals() {
+  return await fetcher("https://www.cheapshark.com/api/1.0/deals?&pageSize=5")
 }
 
 export async function cheapSharkGameFromId(id:string) { 
-  const response = fetch(
-    `https://www.cheapshark.com/api/1.0/games?id=${id}`
-  )
-  .then(res => res.json())
-  .then(data => {
-    return data
-  })
-  return await response
+  return await fetcher(`https://www.cheapshark.com/api/1.0/games?id=${id}`)
 }
 
-export async function fetchRawgGame(title: string) {
-  const response = await fetch(
-    `https://api.rawg.io/api/games?key=${process.env.API_KEY}&search=${title}&pageSize=1`
-  )
-    .then((res) => res.json())
-    .then((data) => {
-      return data;
-    });
-  return await response;
+export async function rawgSearchGameFromTitle(title: string) {
+  return await fetcher(`https://api.rawg.io/api/games?key=${process.env.API_KEY}&search=${title}&pageSize=1`)
 }
 
-export async function fetchRawgGameScreenshots(title: string) {
-  const response = await fetch(
-    `https://api.rawg.io/api/games/${title}/screenshots?key=${process.env.API_KEY}`
-  )
-    .then((res) => res.json())
-    .then((data) => {
-      return data;
-    });
-  return await response;
+export async function rawgScreenshots(title: string) {
+ return await fetcher(`https://api.rawg.io/api/games/${title}/screenshots?key=${process.env.API_KEY}`)
 }
 
-export async function fetchRawgGameDetails(id: number) {
-  const response = await fetch(
-    `https://api.rawg.io/api/games/${id}?key=${process.env.API_KEY}`
-  )
-    .then((res) => res.json())
-    .then((data) => {
-      return data;
-    });
-  return await response;
+export async function rawgGameFromID(id: number) {
+ return await fetcher(`https://api.rawg.io/api/games/${id}?key=${process.env.API_KEY}`)
 }

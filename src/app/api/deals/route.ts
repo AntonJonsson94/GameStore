@@ -1,8 +1,8 @@
 const dbConnect = require("../../lib/dbConnect");
 
 import {
-  fetchFreeGames,
-  fetchHighRatedDeals,
+  cheapSharkFiveFreeGames,
+  cheapSharkFiveDeals,
 } from "../../utils/apiRequests";
 import { createGame } from "@/app/services/createGames";
 
@@ -12,7 +12,7 @@ export async function GET() {
 
     const games:any = [];
 
-    const freeGames = await fetchFreeGames();
+    const freeGames = await cheapSharkFiveFreeGames();
 
     freeGames.forEach((game: any) => {
       if (game.salePrice === "0.00") {
@@ -20,7 +20,7 @@ export async function GET() {
       }
     });
 
-    const highestDealRatedGames = await fetchHighRatedDeals();
+    const highestDealRatedGames = await cheapSharkFiveDeals();
     highestDealRatedGames.forEach((game:any) => {
       if (game.dealRating === "10.0") {
         games.push(game);
