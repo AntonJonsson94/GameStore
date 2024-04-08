@@ -3,96 +3,96 @@ const dbConnect = require("../../lib/dbConnect");
 import {
   fetchFreeGames,
   fetchHighRatedDeals,
-  fetchRawgGameDetails,
-  fetchRawgGame,
-  fetchRawgGameScreenshots,
 } from "../../utils/apiRequests";
-const { Game } = require("../../models/schemas");
+import { createGame } from "@/app/services/createGames";
 
 export async function GET() {
   try {
     await dbConnect();
 
-    const gamesToDisplay = [];
+    const games:any = [];
 
     const freeGames = await fetchFreeGames();
 
-    freeGames.forEach((game) => {
+    freeGames.forEach((game: any) => {
       if (game.salePrice === "0.00") {
-        gamesToDisplay.push(game);
+        games.push(game);
       }
     });
 
     const highestDealRatedGames = await fetchHighRatedDeals();
-    highestDealRatedGames.forEach((game) => {
+    highestDealRatedGames.forEach((game:any) => {
       if (game.dealRating === "10.0") {
-        gamesToDisplay.push(game);
+        games.push(game);
       }
     });
 
-    const uniqueGames = Array.from(
-      new Set(gamesToDisplay.map((game) => game.title))
+
+    //get unique games from the combined data, with the free ones taking prio
+    const gamesToDisplay = Array.from(
+      new Set(games.map((game:any) => game.title))
     )
-      .map((title) => gamesToDisplay.find((game) => game.title === title))
+      .map((title) => games.find((game:any) => game.title === title))
       .slice(0, 5);
+   ;
+    return Response.json(await createGame(gamesToDisplay[0]))
 
-    // console.log("Top 5", uniqueGames);
 
-    for (const game of uniqueGames) {
-      try {
-        const rawgGame = await fetchRawgGame(game.title);
+    // for (const game of gamesToDisplay) {
+    //   try {
+    //     const rawgGame = await fetchRawgGame(game.title);
 
-        const rawgGameScreenshots = await fetchRawgGameScreenshots(
-          rawgGame.results[0].slug
-        );
+    //     const rawgGameScreenshots = await fetchRawgGameScreenshots(
+    //       rawgGame.results[0].slug
+    //     );
 
-        const gameDetails = await fetchRawgGameDetails(rawgGame.results[0].id);
+    //     const gameDetails = await fetchRawgGameDetails(rawgGame.results[0].id);
 
-        const combinedGame = {
-          ...game,
-          ...gameDetails,
-          ...rawgGameScreenshots,
-        };
-        console.log("this is one game");
-        console.log(combinedGame);
+    //     const combinedGame = {
+    //       ...game,
+    //       ...gameDetails,
+    //       ...rawgGameScreenshots,
+    //     };
+    //     console.log("this is one game");
+    //     console.log(combinedGame);
 
-        const GameModel = {
-          id: combinedGame.id,
-          name: combinedGame.name,
-          description: combinedGame.description,
-          lowest_price: combinedGame.salePrice,
-          deals: game,
-          screenshots: rawgGameScreenshots,
-          release_date: combinedGame.released,
-          cheapChark_id: combinedGame.dealID,
-          background_image: combinedGame.background_image,
-          metacritic: combinedGame.metacritic,
-          publishers: combinedGame.publishers,
-        };
+    //     const GameModel = {
+    //       id: combinedGame.id,
+    //       name: combinedGame.name,
+    //       description: combinedGame.description,
+    //       lowest_price: combinedGame.salePrice,
+    //       deals: game,
+    //       screenshots: rawgGameScreenshots,
+    //       release_date: combinedGame.released,
+    //       cheapChark_id: combinedGame.dealID,
+    //       background_image: combinedGame.background_image,
+    //       metacritic: combinedGame.metacritic,
+    //       publishers: combinedGame.publishers,
+    //     };
 
-        const existingGame = await Game.findOne({
-          cheapChark_id: game.dealID,
-        });
+    //     const existingGame = await Game.findOne({
+    //       cheapChark_id: game.dealID,
+    //     });
 
-        if (!existingGame) {
-          try {
-            const newGame = await Game.create(GameModel);
-            console.log("Game saved successfully:", newGame);
-            const populatedGame = await Game.findById(newGame._id).populate(
-              "games"
-            );
-            return populatedGame;
-          } catch (error) {
-            console.error("Error saving game:", error);
-            return null;
-          }
-        }
-      } catch (error) {
-        console.error(`Error processing game ${game.title}:`, error);
-        return null;
-      }
-    }
+    //     if (!existingGame) {
+    //       try {
+    //         const newGame = await Game.create(GameModel);
+    //         console.log("Game saved successfully:", newGame);
+    //         const populatedGame = await Game.findById(newGame._id).populate(
+    //           "games"
+    //         );
+    //         return populatedGame;
+    //       } catch (error) {
+    //         console.error("Error saving game:", error);
+    //         return null;
+    //       }
+    //     }
+    //   } catch (error) {
+    //     console.error(`Error processing game ${game.title}:`, error);
+    //     return null;
+    //   }
+    // }
   } catch (error) {
-    console.error(error);
+//    console.error(error);
   }
 }
