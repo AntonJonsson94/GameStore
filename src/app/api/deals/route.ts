@@ -1,6 +1,8 @@
 const dbConnect = require("../../lib/dbConnect");
 
+import { ICheapSharkGame, IGame } from "@/app/models/interfaces";
 import { cheapSharkFiveDeals, cheapSharkFiveFreeGames } from "../../utils/apiRequests";
+import { Game} from "@/app/models/schemas";
 import { createGame } from "@/app/services/createGames";
 
 export async function GET() {
@@ -24,12 +26,32 @@ export async function GET() {
       }
     });
 
-
+    const gamesToDisplay:IGame[] = [] 
     //get unique games from the combined data, with the free ones taking prio
-    const gamesToDisplay = Array.from(new Set(games.map((game:any) => game.title)))
+    const fiveCheapSharkGames:ICheapSharkGame[] = Array.from(new Set(games.map((game:any) => game.title)))
       .map((title) => games.find((game:any) => game.title === title))
       .slice(0, 5);
-    return Response.json(await createGame(gamesToDisplay[0]))
+
+
+
+      for (const game of fiveCheapSharkGames) {
+        const existingGame = await Game.findOne({
+          cheap_shark_id: game.gameID
+        });
+        // console.log(existingGame)
+        createGame(game)
+        if(!existingGame) {
+          gamesToDisplay.push(await createGame(game))
+        } else {
+
+        }
+     }
+
+
+
+    return Response.json(gamesToDisplay)
+
+
   } catch (error) {
     console.log(error)
     return new Response("error")
