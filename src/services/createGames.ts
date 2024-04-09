@@ -1,31 +1,36 @@
 import { ICheapSharkGame, IRawgGame } from "@/models/interfaces";
 import { Game } from "@/models/schemas";
-import { rawgSearchGameFromTitle, rawgScreenshots, cheapSharkGameFromId, rawgGameFromID } from "@/utils/apiRequests";
-
+import {
+  rawgSearchGameFromTitle,
+  rawgScreenshots,
+  cheapSharkGameFromId,
+  rawgGameFromID,
+} from "@/services/apiRequests";
 
 export async function createGame(cheapSharkGame: ICheapSharkGame) {
+  const searchResultRawg = await rawgSearchGameFromTitle(cheapSharkGame.title);
+  const screenshotRes = await rawgScreenshots(searchResultRawg.results[0].slug);
 
-    const searchResultRawg = await rawgSearchGameFromTitle(cheapSharkGame.title);
-    const screenshotRes = await rawgScreenshots(
-      searchResultRawg.results[0].slug
-    );
-    
-    const cheapSharkGameWithDeals = await cheapSharkGameFromId(cheapSharkGame.gameID)
+  const cheapSharkGameWithDeals = await cheapSharkGameFromId(
+    cheapSharkGame.gameID
+  );
+  const screenshots = screenshotRes.results;
+  const rawgGame: IRawgGame = await rawgGameFromID(
+    searchResultRawg.results[0].id
+  );
 
-    const screenshots = screenshotRes.results
-    const rawgGame:IRawgGame = await rawgGameFromID(searchResultRawg.results[0].id);
-    const newGame = new Game ({
-      title: cheapSharkGame.title,
-      cheap_shark_id: cheapSharkGame.gameID,
-      description: rawgGame.description,
-      lowest_price: cheapSharkGame.salePrice,
-      full_price: cheapSharkGame.normalPrice,
-      metacritic_score: rawgGame.metacritic,
-      release_date: rawgGame.released,
-      screenshots: screenshots,
-      splash_art: rawgGame.background_image,
-      storeOffers: cheapSharkGameWithDeals.deals
-    })
-    await newGame.save()
-    return newGame
+  const newGame = new Game({
+    title: cheapSharkGame.title,
+    cheap_shark_id: cheapSharkGame.gameID,
+    description: rawgGame.description,
+    lowest_price: cheapSharkGame.salePrice,
+    full_price: cheapSharkGame.normalPrice,
+    metacritic_score: rawgGame.metacritic,
+    release_date: rawgGame.released,
+    screenshots: screenshots,
+    splash_art: rawgGame.background_image,
+    storeOffers: cheapSharkGameWithDeals.deals,
+  });
+  await newGame.save();
+  return newGame;
 }
