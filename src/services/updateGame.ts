@@ -1,20 +1,19 @@
-import { IGame } from "@/models/interfaces";
+import { ICheapSharkGame, IGame } from "@/models/interfaces";
 import { Game } from "@/models/schemas";
 
-export async function updateGame(game: IGame) {
+export async function updateGame(game: ICheapSharkGame) {
   try {
-    console.log(game.title);
-    const update = { full_price: game.full_price };
-
     const res = await Game.findOneAndUpdate(
-      { cheap_shark_id: game.cheap_shark_id },
-      update,
-      { new: true }
+      { cheap_shark_id: game.gameID },
+      game,
+      {
+        new: true,
+      }
     );
     if (res) {
-      console.log(res.full_price);
+      console.log("Updated game:", res.title, res.lowest_price);
     } else {
-      console.log("no game found");
+      console.log("No game found:", game.title);
     }
   } catch (error) {
     console.error("Error updating game:", error);
