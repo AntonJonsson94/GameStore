@@ -1,48 +1,46 @@
 import mongoose, { Schema } from "mongoose";
 import { IGame, IStore, IStoreOffer } from "./interfaces";
 
-const ScreenshotSchema = new Schema( {
-  id: String,
-  image: String,
-  width: String,
-  height: String, 
-  is_deleted: Boolean
-})
+const ScreenshotSchema = new Schema({
+  id: { type: String, required: true },
+  image: { type: String, required: true },
+  width: { type: String, required: true },
+  height: { type: String, required: true },
+  is_deleted: { type: Boolean, required: true },
+});
 const StoreOfferSchema = new Schema<IStoreOffer>({
-  id: String,
-  name: String,
-  price: Number,
-  original_price: Number,
-  discount: Number,
-  store_id: String,
+  id: { type: String, required: true },
+  name: { type: String, required: true },
+  price: { type: Number, required: true },
+  original_price: { type: Number, required: true },
+  discount: { type: Number, required: true },
+  store_id: { type: String, required: true },
 });
 
-const GameSchema = new Schema<IGame>(
-  {
-    title: String,
-    description: String,
-    splash_art: String,
-    lowest_price: String,
-    release_date: String,
-    metacritic_score: String,
-    cheap_shark_id: String,
-    screenshots: [ScreenshotSchema],
-    storeOffers: [StoreOfferSchema]
-  },
-  {
-    strictQuery: false,
-  }
-);
+const GameSchema = new Schema<IGame>({
+  title: { type: String, required: true },
+  description: { type: String, required: true },
+  splash_art: { type: String, required: true },
+  lowest_price: { type: String, required: true },
+  full_price: { type: String, required: true },
+  release_date: { type: String, required: true },
+  metacritic_score: { type: String, required: true },
+  cheap_shark_id: { type: String, required: true },
+  screenshots: { type: [ScreenshotSchema], required: true },
+  store_offers: { type: [StoreOfferSchema], required: true },
+});
 
 const StoreSchema = new Schema<IStore>({
-  id: String,
-  name: String,
-  image_url: String,
+  id: { type: String, required: true },
+  name: { type: String, required: true },
+  image_url: { type: String, required: true },
 });
 
-const Deal = mongoose.models.Deal || mongoose.model<IStoreOffer>("Deal", StoreOfferSchema);
+const StoreOffer =
+  mongoose.models.Deal ||
+  mongoose.model<IStoreOffer>("StoreOffer", StoreOfferSchema);
 const Game = mongoose.models.Game || mongoose.model<IGame>("Game", GameSchema);
 const Store =
   mongoose.models.Store || mongoose.model<IStore>("Store", StoreSchema);
 
-export { Deal, Game, Store };
+export { StoreOffer as Deal, Game, Store };
