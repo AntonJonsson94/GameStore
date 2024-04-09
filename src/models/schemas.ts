@@ -37,10 +37,10 @@ const StoreSchema = new Schema<IStore>({
 });
 
 const StoreOffer =
-  mongoose.models.Deal ||
+  mongoose.models.StoreOffer ||
   mongoose.model<IStoreOffer>("StoreOffer", StoreOfferSchema);
 const Game = mongoose.models.Game || mongoose.model<IGame>("Game", GameSchema);
 const Store =
   mongoose.models.Store || mongoose.model<IStore>("Store", StoreSchema);
 
-export { StoreOffer as Deal, Game, Store };
+export { StoreOffer, Game, Store };
