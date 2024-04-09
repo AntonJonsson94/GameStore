@@ -16,7 +16,7 @@ export async function createGame(cheapSharkGame: ICheapSharkGame) {
   const cheapSharkGameWithDeals = await cheapSharkGameFromId(
     cheapSharkGame.gameID
   );
-
+  //if the metadata doesn't exist on rawg it's probably a games bundle, add the description and grab everything from cheapshark instead
   if (
     cleanString(cheapSharkGame.title) ===
     cleanString(searchResultRawg.results[0].name)
