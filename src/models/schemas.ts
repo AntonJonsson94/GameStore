@@ -2,11 +2,11 @@ import mongoose, { Schema } from "mongoose";
 import { IGame, IStore, IStoreOffer } from "./interfaces";
 
 const ScreenshotSchema = new Schema({
-  id: { type: String, required: true },
+  id: { type: String, required: false },
   image: { type: String, required: true },
-  width: { type: String, required: true },
-  height: { type: String, required: true },
-  is_deleted: { type: Boolean, required: true }
+  width: { type: String, required: false },
+  height: { type: String, required: false },
+  is_deleted: { type: Boolean, required: false }
 });
 const StoreOfferSchema = new Schema<IStoreOffer>({
   id: { type: String, required: true },

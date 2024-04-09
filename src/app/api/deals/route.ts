@@ -38,7 +38,6 @@ export async function GET() {
       .map((title) => games.find((game: any) => game.title === title))
       .slice(0, 5);
 
-    //TODO: fixa så att vi inte tar in description på spel som inte har en (bundles etc)
     for (const game of fiveCheapSharkGames) {
       const existingGame = await Game.findOne({
         cheap_shark_id: game.gameID
