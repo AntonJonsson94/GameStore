@@ -41,8 +41,7 @@ export async function GET() {
       const existingGame = await Game.findOne({
         cheap_shark_id: game.gameID
       });
-      // console.log(existingGame)
-      createGame(game);
+
       if (!existingGame) {
         gamesToDisplay.push(await createGame(game));
       } else {

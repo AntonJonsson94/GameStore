@@ -4,7 +4,7 @@ import {
   rawgSearchGameFromTitle,
   rawgScreenshots,
   cheapSharkGameFromId,
-  rawgGameFromID,
+  rawgGameFromID
 } from "@/services/apiRequests";
 
 export async function createGame(cheapSharkGame: ICheapSharkGame) {
@@ -29,7 +29,7 @@ export async function createGame(cheapSharkGame: ICheapSharkGame) {
     release_date: rawgGame.released,
     screenshots: screenshots,
     splash_art: rawgGame.background_image,
-    storeOffers: cheapSharkGameWithDeals.deals,
+    storeOffers: cheapSharkGameWithDeals.deals
   });
   await newGame.save();
   return newGame;
