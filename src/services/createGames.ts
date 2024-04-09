@@ -1,4 +1,4 @@
-import { ICheapSharkGame, IRawgGame } from "@/models/interfaces";
+import { ICheapSharkGame, IRawgGame, IScreenshot } from "@/models/interfaces";
 import { Game } from "@/models/schemas";
 import {
   rawgSearchGameFromTitle,
@@ -6,18 +6,36 @@ import {
   cheapSharkGameFromId,
   rawgGameFromID
 } from "@/services/apiRequests";
+import { cleanString } from "@/utils/cleanText";
 
 export async function createGame(cheapSharkGame: ICheapSharkGame) {
   const searchResultRawg = await rawgSearchGameFromTitle(cheapSharkGame.title);
-  const screenshotRes = await rawgScreenshots(searchResultRawg.results[0].slug);
+  let screenshots: IScreenshot[] = [];
+  let rawgGame: IRawgGame;
 
   const cheapSharkGameWithDeals = await cheapSharkGameFromId(
     cheapSharkGame.gameID
   );
-  const screenshots = screenshotRes.results;
-  const rawgGame: IRawgGame = await rawgGameFromID(
-    searchResultRawg.results[0].id
-  );
+
+  if (
+    cleanString(cheapSharkGame.title) ===
+    cleanString(searchResultRawg.results[0].name)
+  ) {
+    const screenshotRes = await rawgScreenshots(
+      searchResultRawg.results[0].slug
+    );
+    screenshots = screenshotRes.results;
+
+    rawgGame = await rawgGameFromID(searchResultRawg.results[0].id);
+  } else {
+    const releaseDate = new Date(cheapSharkGame.releaseDate);
+    screenshots.push({ image: cheapSharkGame.thumb });
+    rawgGame = {
+      description: "A bundle of games!",
+      released: releaseDate.toDateString(),
+      background_image: cheapSharkGame.thumb
+    };
+  }
 
   const newGame = new Game({
     title: cheapSharkGame.title,
@@ -25,7 +43,7 @@ export async function createGame(cheapSharkGame: ICheapSharkGame) {
     description: rawgGame.description,
     lowest_price: cheapSharkGame.salePrice,
     full_price: cheapSharkGame.normalPrice,
-    metacritic_score: rawgGame.metacritic,
+    metacritic_score: cheapSharkGame.metacriticScore,
     release_date: rawgGame.released,
     screenshots: screenshots,
     splash_art: rawgGame.background_image,
