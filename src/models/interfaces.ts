@@ -21,6 +21,7 @@ export interface IGame {
   cheap_shark_id: string;
   splash_art: string;
   metacritic_score: string;
+  discount: string;
 }
 
 export interface IScreenshot {

@@ -47,7 +47,8 @@ export async function createGame(cheapSharkGame: ICheapSharkGame) {
     release_date: rawgGame.released,
     screenshots: screenshots,
     splash_art: rawgGame.background_image,
-    storeOffers: cheapSharkGameWithDeals.deals
+    storeOffers: cheapSharkGameWithDeals.deals,
+    discount: cheapSharkGame.savings
   });
   await newGame.save();
   return newGame;

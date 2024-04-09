@@ -1,21 +1,23 @@
 import { ICheapSharkGame, IGame } from "@/models/interfaces";
 import { Game } from "@/models/schemas";
 
-export async function updateGame(game: ICheapSharkGame) {
+export async function updatePrice(game: ICheapSharkGame) {
+  const update: Partial<IGame> = {
+    full_price: game.normalPrice,
+    lowest_price: game.salePrice,
+    discount: game.savings
+  };
   try {
     const res = await Game.findOneAndUpdate(
       { cheap_shark_id: game.gameID },
-      game,
+      update,
       {
-        new: true,
+        new: true
       }
     );
-    if (res) {
-      console.log("Updated game:", res.title, res.lowest_price);
-    } else {
-      console.log("No game found:", game.title);
-    }
+    return res;
   } catch (error) {
     console.error("Error updating game:", error);
+    return;
   }
 }

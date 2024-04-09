@@ -5,7 +5,7 @@ import {
   cheapSharkFiveDeals
 } from "@/services/apiRequests";
 import { createGame } from "@/services/createGames";
-import { updateGame } from "@/services/updateGame";
+import { updatePrice } from "@/services/updateGame";
 
 const dbConnect = require("@/lib/dbConnect");
 
@@ -38,15 +38,15 @@ export async function GET() {
       .map((title) => games.find((game: any) => game.title === title))
       .slice(0, 5);
 
-    for (const game of fiveCheapSharkGames) {
+    for (const cheapSharkGame of fiveCheapSharkGames) {
       const existingGame = await Game.findOne({
-        cheap_shark_id: game.gameID
+        cheap_shark_id: cheapSharkGame.gameID
       });
 
       if (!existingGame) {
-        gamesToDisplay.push(await createGame(game));
+        gamesToDisplay.push(await createGame(cheapSharkGame));
       } else {
-        updateGame(existingGame);
+        gamesToDisplay.push(await updatePrice(cheapSharkGame));
       }
     }
 
