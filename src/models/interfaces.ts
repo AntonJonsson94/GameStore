@@ -15,7 +15,7 @@ export interface IGame {
   description: string;
   lowest_price: string;
   full_price: string;
-  store_offers: [IStoreOffer];
+  store_offers: IStoreOffer[];
   screenshots: [IScreenshot];
   release_date: string;
   cheap_shark_id: string;

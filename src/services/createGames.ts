@@ -21,7 +21,14 @@ export async function createGame(cheapSharkGame: ICheapSharkGame) {
   const cheapSharkGameWithDeals = await cheapSharkGameFromId(
     cheapSharkGame.gameID
   );
-  const deals: IStoreOffer = cheapSharkGameWithDeals.deals;
+  const deals: IStoreOffer[] = await cheapSharkGameWithDeals.deals;
+
+  const store_offers: IStoreOffer[] = deals.map((deal) => {
+    return {
+      ...deal,
+      link: `https://www.cheapshark.com/redirect?dealID=${deal.dealID}`
+    };
+  });
   //if the metadata doesn't exist on rawg it's probably a games bundle, add the description and grab everything from cheapshark instead
   if (
     cleanString(cheapSharkGame.title) ===
@@ -53,7 +60,7 @@ export async function createGame(cheapSharkGame: ICheapSharkGame) {
     release_date: rawgGame.released,
     screenshots: screenshots,
     splash_art: rawgGame.background_image,
-    store_offers: deals,
+    store_offers: store_offers,
     discount: cheapSharkGame.savings
   });
   await newGame.save();
