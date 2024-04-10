@@ -9,12 +9,12 @@ const ScreenshotSchema = new Schema({
   is_deleted: { type: Boolean, required: false }
 });
 const StoreOfferSchema = new Schema<IStoreOffer>({
-  id: { type: String, required: true },
-  name: { type: String, required: true },
-  price: { type: Number, required: true },
-  original_price: { type: Number, required: true },
-  discount: { type: Number, required: true },
-  store_id: { type: String, required: true }
+  dealID: { type: String, required: true },
+  price: { type: String, required: true },
+  retailPrice: { type: String, required: true },
+  savings: { type: String, required: true },
+  storeID: { type: String, required: true },
+  link: { type: String, required: false }
 });
 
 const GameSchema = new Schema<IGame>({

@@ -1,4 +1,9 @@
-import { ICheapSharkGame, IRawgGame, IScreenshot } from "@/models/interfaces";
+import {
+  ICheapSharkGame,
+  IRawgGame,
+  IScreenshot,
+  IStoreOffer
+} from "@/models/interfaces";
 import { Game } from "@/models/schemas";
 import {
   rawgSearchGameFromTitle,
@@ -16,6 +21,7 @@ export async function createGame(cheapSharkGame: ICheapSharkGame) {
   const cheapSharkGameWithDeals = await cheapSharkGameFromId(
     cheapSharkGame.gameID
   );
+  const deals: IStoreOffer = cheapSharkGameWithDeals.deals;
   //if the metadata doesn't exist on rawg it's probably a games bundle, add the description and grab everything from cheapshark instead
   if (
     cleanString(cheapSharkGame.title) ===
@@ -47,7 +53,7 @@ export async function createGame(cheapSharkGame: ICheapSharkGame) {
     release_date: rawgGame.released,
     screenshots: screenshots,
     splash_art: rawgGame.background_image,
-    storeOffers: cheapSharkGameWithDeals.deals,
+    store_offers: deals,
     discount: cheapSharkGame.savings
   });
   await newGame.save();
