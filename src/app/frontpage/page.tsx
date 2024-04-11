@@ -25,7 +25,7 @@ export default function FrontPage() {
       {isLoading ? (
         <span className="loading loading-ball loading-lg"></span>
       ) : (
-        <div className="flex flex-wrap gap-6 w-auto h-auto">
+        <div className="flex flex-wrap gap-6 w-auto h-auto justify-center">
           {games?.map((game, index) => (
             <article
               className="card w-96 h-13 bg-base-100 shadow-xl border-2 border-cyan-500 "
