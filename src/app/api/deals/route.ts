@@ -1,35 +1,58 @@
-import { NextRequest, NextResponse } from "next/server";
+import { IGame, ICheapSharkGame } from "@/models/interfaces";
+import { Game } from "@/models/schemas";
+import {
+  cheapSharkFiveFreeGames,
+  cheapSharkFiveDeals
+} from "@/services/apiRequests";
+import { createGame } from "@/services/createGames";
+import { updatePrice } from "@/services/updateGame";
 
-export async function GET(req: NextRequest, res: NextResponse) {
-  const cheapshark = await fetch(
-    "https://www.cheapshark.com/api/1.0/deals?&pageSize=5"
-  );
+const dbConnect = require("@/lib/dbConnect");
 
-  const cheapsharkData = await cheapshark.json();
+export async function GET() {
+  try {
+    await dbConnect();
 
-  const rawgRes = await fetch(
-    `https://api.rawg.io/api/games?key=${process.env.API_KEY}&search=${cheapsharkData[0].title}&search_exact=1`
-  );
-  const rawgData = await rawgRes.json();
+    const games: any[] = [];
 
-  cheapsharkData.forEach((deal) => {
-    const rawg = fetch(
-      `https://api.rawg.io/api/games?key=${process.env.API_KEY}&search=${deal.title}&search_exact=1`
+    const freeGames = await cheapSharkFiveFreeGames();
+
+    freeGames.forEach((game: any) => {
+      if (game.salePrice === "0.00") {
+        games.push(game);
+      }
+    });
+
+    const highestDealRatedGames = await cheapSharkFiveDeals();
+    highestDealRatedGames.forEach((game: any) => {
+      if (game.dealRating === "10.0") {
+        games.push(game);
+      }
+    });
+
+    const gamesToDisplay: IGame[] = [];
+    //get unique games from the combined data, with the free ones taking prio
+    const fiveCheapSharkGames: ICheapSharkGame[] = Array.from(
+      new Set(games.map((game: any) => game.title))
     )
-      .then((res) => {
-        if (!res.ok) {
-          throw new Error("Something went wrong");
-        }
-        return res.json();
-      })
-      .then((data) => {
-        const rawgGameDetailsRes = fetch(
-          `https://api.rawg.io/api/games/${data.id}?key=${process.env.API_KEY}`
-        );
-        const gameDetails = await rawgGameDetailsRes.json();
-      })
-      .catch((e) => console.log(e));
-  });
+      .map((title) => games.find((game: any) => game.title === title))
+      .slice(0, 5);
 
-  return new Response("hi");
+    for (const cheapSharkGame of fiveCheapSharkGames) {
+      const existingGame = await Game.findOne({
+        cheap_shark_id: cheapSharkGame.gameID
+      });
+      // await createGame(cheapSharkGame);
+      if (!existingGame) {
+        gamesToDisplay.push(await createGame(cheapSharkGame));
+      } else {
+        gamesToDisplay.push(await updatePrice(cheapSharkGame));
+      }
+    }
+
+    return Response.json(gamesToDisplay);
+  } catch (error) {
+    console.log(error);
+    return new Response("error");
+  }
 }
