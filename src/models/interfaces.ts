@@ -1,12 +1,12 @@
 import { ObjectId } from "mongoose";
 
 export interface IStoreOffer {
-  id: string;
-  name: string;
-  price: number;
-  original_price: number;
-  discount: number;
-  store_id: string;
+  storeID: string;
+  dealID: string;
+  price: string;
+  retailPrice: string;
+  savings: string;
+  link?: string;
 }
 //our game, this is what we pice together with data from RAWG and CheapShark
 export interface IGame {
@@ -15,7 +15,7 @@ export interface IGame {
   description: string;
   lowest_price: string;
   full_price: string;
-  store_offers: [IStoreOffer];
+  store_offers: IStoreOffer[];
   screenshots: [IScreenshot];
   release_date: string;
   cheap_shark_id: string;
