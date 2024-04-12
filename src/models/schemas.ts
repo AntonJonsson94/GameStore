@@ -26,7 +26,8 @@ const GameSchema = new Schema<IGame>({
   release_date: { type: String, required: true },
   metacritic_score: { type: String, required: false },
   cheap_shark_id: { type: String, required: true },
-  screenshots: { type: [ScreenshotSchema], required: true },
+  screenshots: { type: [String], required: true },
+  videos: { type: [String], required: true },
   store_offers: { type: [StoreOfferSchema], required: true },
   discount: { type: String, required: true }
 });

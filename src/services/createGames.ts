@@ -1,23 +1,18 @@
-import {
-  ICheapSharkGame,
-  IRawgGame,
-  IScreenshot,
-  IStoreOffer
-} from "@/models/interfaces";
+import { ICheapSharkGame, IGDBGame, IStoreOffer } from "@/models/interfaces";
 import { Game } from "@/models/schemas";
 import {
-  rawgSearchGameFromTitle,
-  rawgScreenshots,
   cheapSharkGameFromId,
-  rawgGameFromID
+  getIgdbGame,
+  rawgScreenshots
 } from "@/services/apiRequests";
 import { cleanString } from "@/utils/cleanText";
 
 export async function createGame(cheapSharkGame: ICheapSharkGame) {
-  const searchResultRawg = await rawgSearchGameFromTitle(cheapSharkGame.title);
-  let screenshots: IScreenshot[] = [];
-  let rawgGame: IRawgGame;
+  const igdbRes: IGDBGame[] = await getIgdbGame(
+    cleanString(cheapSharkGame.title)
+  );
 
+  const igdbGame = igdbRes[0];
   const cheapSharkGameWithDeals = await cheapSharkGameFromId(
     cheapSharkGame.gameID
   );
@@ -29,37 +24,37 @@ export async function createGame(cheapSharkGame: ICheapSharkGame) {
       link: `https://www.cheapshark.com/redirect?dealID=${deal.dealID}`
     };
   });
-  //if the metadata doesn't exist on rawg it's probably a games bundle, add the description and grab everything from cheapshark instead
-  if (
-    cleanString(cheapSharkGame.title) ===
-    cleanString(searchResultRawg.results[0].name)
-  ) {
-    const screenshotRes = await rawgScreenshots(
-      searchResultRawg.results[0].slug
-    );
-    screenshots = screenshotRes.results;
 
-    rawgGame = await rawgGameFromID(searchResultRawg.results[0].id);
-  } else {
-    const releaseDate = new Date(cheapSharkGame.releaseDate);
-    screenshots.push({ image: cheapSharkGame.thumb });
-    rawgGame = {
-      description: "A bundle of games!",
-      released: releaseDate.toDateString(),
-      background_image: cheapSharkGame.thumb
-    };
-  }
+  const screenshotUrls =
+    igdbGame.screenshots?.map(
+      (screenshot) =>
+        `https://images.igdb.com/igdb/image/upload/t_1080p/${screenshot.image_id}.jpg`
+    ) || [];
+
+  const artworkUrls =
+    igdbGame.artworks?.map(
+      (artwork) =>
+        `https://images.igdb.com/igdb/image/upload/t_1080p/${artwork.image_id}.jpg`
+    ) || [];
+
+  const videoUrls =
+    igdbGame.videos?.map(
+      (video) => `https://www.youtube.com/watch?v=${video.video_id}`
+    ) || [];
+
+  const screenshots = [...screenshotUrls, ...artworkUrls];
 
   const newGame = new Game({
     title: cheapSharkGame.title,
     cheap_shark_id: cheapSharkGame.gameID,
-    description: rawgGame.description,
+    description: igdbGame.summary,
     lowest_price: cheapSharkGame.salePrice,
     full_price: cheapSharkGame.normalPrice,
     metacritic_score: cheapSharkGame.metacriticScore,
-    release_date: rawgGame.released,
+    release_date: cheapSharkGame.releaseDate,
     screenshots: screenshots,
-    splash_art: rawgGame.background_image,
+    splash_art: `https://images.igdb.com/igdb/image/upload/t_1080p/${igdbGame.cover.image_id}.jpg`,
+    videos: videoUrls,
     store_offers: store_offers,
     discount: cheapSharkGame.savings
   });

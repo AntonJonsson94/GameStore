@@ -2,7 +2,7 @@ import { IGame, ICheapSharkGame } from "@/models/interfaces";
 import { Game } from "@/models/schemas";
 import {
   cheapSharkFiveFreeGames,
-  cheapSharkFiveDeals
+  cheapSharkDeals
 } from "@/services/apiRequests";
 import { createGame } from "@/services/createGames";
 import { updatePrice } from "@/services/updateGame";
@@ -23,7 +23,7 @@ export async function GET() {
       }
     });
 
-    const highestDealRatedGames = await cheapSharkFiveDeals();
+    const highestDealRatedGames = await cheapSharkDeals();
     highestDealRatedGames.forEach((game: any) => {
       if (game.dealRating === "10.0") {
         games.push(game);
@@ -36,7 +36,7 @@ export async function GET() {
       new Set(games.map((game: any) => game.title))
     )
       .map((title) => games.find((game: any) => game.title === title))
-      .slice(0, 5);
+      .slice(0, 10);
 
     for (const cheapSharkGame of fiveCheapSharkGames) {
       const existingGame = await Game.findOne({
