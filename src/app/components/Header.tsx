@@ -2,13 +2,15 @@ import React from "react";
 
 export default function Header() {
   return (
-    <header className="grid h-auto place-items-center">
+    <header className="flex flex-col h-auto place-items-center">
       <div className="flex">
-        <p className="logo-value font-extrabold">Value</p>
-        <p className="logo-town font-extrabold">Town</p>
+        <h1 className="logo-value">Value</h1>
+        <h1 className="logo-town">Town</h1>
       </div>
-      <hr className={"colors.primary"} />
-      <p className="font-bold">The Best Deals in Gaming!</p>
+      <div className=" divider divider-info justify-center"></div>
+      <h1 className="text-xl" text-xl>
+        The Best Deals in Gaming!
+      </h1>
     </header>
   );
 }
