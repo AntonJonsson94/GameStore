@@ -43,15 +43,15 @@ export interface IStoreOffer {
 export interface IGame {
   _id: ObjectId;
   title: string;
-  description: string;
+  description?: string;
   lowest_price: string;
   full_price: string;
   store_offers: IStoreOffer[];
-  screenshots: string[];
-  videos: string[];
+  screenshots?: string[];
+  videos?: string[];
   release_date: string;
   cheap_shark_id: string;
-  splash_art: string;
+  splash_art?: string;
   metacritic_score: string;
   discount: string;
 }

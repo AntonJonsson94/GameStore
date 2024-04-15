@@ -29,20 +29,20 @@ export async function GET() {
         games.push(game);
       }
     });
+    console.log(games.length);
 
     const gamesToDisplay: IGame[] = [];
     //get unique games from the combined data, with the free ones taking prio
-    const fiveCheapSharkGames: ICheapSharkGame[] = Array.from(
-      new Set(games.map((game: any) => game.title))
+    const cheapSharkGames: ICheapSharkGame[] = Array.from(
+      new Set(games.map((game: ICheapSharkGame) => game.title))
     )
       .map((title) => games.find((game: any) => game.title === title))
-      .slice(0, 10);
-
-    for (const cheapSharkGame of fiveCheapSharkGames) {
+      .slice(0, 6);
+    console.log(cheapSharkGames.length);
+    for (const cheapSharkGame of cheapSharkGames) {
       const existingGame = await Game.findOne({
         cheap_shark_id: cheapSharkGame.gameID
       });
-      // await createGame(cheapSharkGame);
       if (!existingGame) {
         gamesToDisplay.push(await createGame(cheapSharkGame));
       } else {
