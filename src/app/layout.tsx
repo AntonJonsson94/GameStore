@@ -6,6 +6,7 @@ import "./globals.css";
 import Searchbar from "./components/Searchbar";
 import { useState } from "react";
 import Header from "./components/Header";
+import Footer from "./components/Footer";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -25,7 +26,7 @@ export default function RootLayout({
   return (
     <html data-theme="gamerTheme" lang="en">
       <body className={`${inter.className}`}>
-        <Header></Header>
+        <Header />
         {isSearchActive && (
           <Searchbar
             isActive={isSearchActive}
@@ -34,6 +35,7 @@ export default function RootLayout({
         )}
 
         {children}
+        <Footer />
       </body>
     </html>
   );

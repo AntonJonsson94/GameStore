@@ -1,18 +1,30 @@
+@import url('https://fonts.googleapis.com/css2?family=Poppins&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Bebas+Neue&display=swap');
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
 
 body {
     background: linear-gradient(to bottom right, theme('colors.base-100') 0%, theme('colors.base-100') 50%, theme('colors.secondary') 50%, theme('colors.secondary') 100%);
    }
 .logo-value {
-    color: theme('colors.secondary');
+    color: theme('colors.info');
     font-size:80px
 }
 .logo-town {
     color: theme('colors.primary');
     font-size: 80px
 }
-  
+@layer components {
+    h1 {
+       @apply font-bebas-neue;
+    }
+   
+    p {
+       @apply font-poppins;
+    }
+   }
+   
   
 

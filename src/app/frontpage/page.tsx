@@ -7,44 +7,55 @@ export default function FrontPage() {
   const [isLoading, setIsLoading] = useState(false);
 
   useEffect(() => {
-    setIsLoading(true); // Start loading
+    setIsLoading(true);
     fetch("http://localhost:3000/api/deals")
       .then((response) => response.json())
       .then((data) => {
         setGames(data);
-        setIsLoading(false); // Data loaded
+        setIsLoading(false);
       })
       .catch((error) => {
         console.error("Error fetching games:", error);
-        setIsLoading(false); // Ensure loading is set to false even if there's an error
+        setIsLoading(false);
       });
   }, []);
 
   return (
     <section className="flex flex-wrap place-items-center p-10 h-auto">
       {isLoading ? (
-        <span className="loading loading-ball loading-lg"></span>
+        <div className="flex flex-wrap gap-6 w-auto h-auto justify-center">
+          <span className="loading loading-ring loading-xs"></span>
+          <span className="loading loading-ring loading-sm"></span>
+          <span className="loading loading-ring loading-md"></span>
+          <span className="loading loading-ring loading-lg"></span>
+        </div>
       ) : (
         <div className="flex flex-wrap gap-6 w-auto h-auto justify-center">
           {games?.map((game, index) => (
             <article
-              className="card w-96 h-13 bg-base-100 shadow-xl border-2 border-cyan-500 "
+              className="card w-96  shadow-xl border-2 border-cyan-500 rounded-none bg-accent"
               key={index}
             >
-              <figure>
-                <img
-                  className="w-full h-48 object-cover"
-                  src={game.splash_art}
-                  alt={game.splash_art}
-                />
+              <figure className="px-10 pt-10">
+                <div className="w-full max-h-32">
+                  <img
+                    src={game.splash_art}
+                    alt={game.splash_art}
+                    className="w-full"
+                  />
+                </div>
               </figure>
-              <div className="card-body border-rounded">
-                <h2 className="card-title">{game.title}</h2>
-                <p className="h-16 overflow-hidden overflow-ellipsis">
+
+              <div className="card-body ">
+                <div className="flex flex-col items-start">
+                  <h2 className="card-title mb-5">{game.title}</h2>
+                  <div className="divider divider-info m-1 w-full"></div>
+                </div>
+                <p className="h-16 overflow-hidden overflow-ellipsis m-2">
                   {game.description}
                 </p>
                 <div className="card-actions justify-end">
-                  <button className="btn btn-primary">
+                  <button className="btn btn-primary rounded-full ">
                     {game.lowest_price}$
                   </button>
                 </div>
