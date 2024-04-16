@@ -21,6 +21,17 @@ export async function createGame(cheapSharkGame: ICheapSharkGame) {
     };
   });
 
+  let splashArt = cheapSharkGame.thumb;
+
+  if (cheapSharkGame.thumb.includes("https://cdn.cloudflare.steamstatic.com")) {
+    splashArt = cheapSharkGame.thumb.replace(
+      /capsule_sm_120(_alt_assets_0)?/g,
+      "header"
+    );
+    console.log(splashArt);
+  }
+
+  // console.log(cheapSharkGame.thumb);
   if (igdbRes.length > 0) {
     const igdbGame = igdbRes[0];
 
@@ -52,7 +63,7 @@ export async function createGame(cheapSharkGame: ICheapSharkGame) {
       metacritic_score: cheapSharkGame.metacriticScore,
       release_date: cheapSharkGame.releaseDate,
       screenshots: screenshots,
-      splash_art: `https://images.igdb.com/igdb/image/upload/t_1080p/${igdbGame.cover.image_id}.jpg`,
+      splash_art: splashArt,
       videos: videoUrls,
       store_offers: store_offers,
       discount: cheapSharkGame.savings
@@ -68,7 +79,8 @@ export async function createGame(cheapSharkGame: ICheapSharkGame) {
       metacritic_score: cheapSharkGame.metacriticScore,
       release_date: cheapSharkGame.releaseDate,
       store_offers: store_offers,
-      discount: cheapSharkGame.savings
+      discount: cheapSharkGame.savings,
+      splash_art: splashArt
     });
     newGame.save();
     return newGame;
