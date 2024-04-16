@@ -55,7 +55,8 @@ export async function createGame(cheapSharkGame: ICheapSharkGame) {
       splash_art: `https://images.igdb.com/igdb/image/upload/t_1080p/${igdbGame.cover.image_id}.jpg`,
       videos: videoUrls,
       store_offers: store_offers,
-      discount: cheapSharkGame.savings
+      discount: cheapSharkGame.savings,
+      cheapest_link: `https://www.cheapshark.com/redirect?dealID=${cheapSharkGame.dealID}`
     });
     newGame.save();
     return newGame;
@@ -68,7 +69,8 @@ export async function createGame(cheapSharkGame: ICheapSharkGame) {
       metacritic_score: cheapSharkGame.metacriticScore,
       release_date: cheapSharkGame.releaseDate,
       store_offers: store_offers,
-      discount: cheapSharkGame.savings
+      discount: cheapSharkGame.savings,
+      cheapest_link: `https://www.cheapshark.com/redirect?dealID=${cheapSharkGame.dealID}`
     });
     newGame.save();
     return newGame;

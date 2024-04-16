@@ -29,7 +29,8 @@ const GameSchema = new Schema<IGame>({
   screenshots: { type: [String], required: false },
   videos: { type: [String], required: false },
   store_offers: { type: [StoreOfferSchema], required: true },
-  discount: { type: String, required: true }
+  discount: { type: String, required: true },
+  cheapest_link: { type: String, required: true }
 });
 
 const StoreSchema = new Schema<IStore>({
