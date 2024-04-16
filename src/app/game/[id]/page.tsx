@@ -7,7 +7,7 @@ const GamePage = ({ params }: { params: { id: string } }) => {
 
   return (
     <main className="container flex justify-center mx-auto">
-      <Image alt="hero-image" width="460" height="215" src="https://cdn.cloudflare.steamstatic.com/steam/apps/1139900/header.jpg?t=1710442474" />
+      <Image priority alt="hero-image" width="460" height="215" src="https://cdn.cloudflare.steamstatic.com/steam/apps/1139900/header.jpg?t=1710442474" />
     </main>
   )
 }
