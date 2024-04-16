@@ -66,7 +66,8 @@ export async function createGame(cheapSharkGame: ICheapSharkGame) {
       splash_art: splashArt,
       videos: videoUrls,
       store_offers: store_offers,
-      discount: cheapSharkGame.savings
+      discount: cheapSharkGame.savings,
+      cheapest_link: `https://www.cheapshark.com/redirect?dealID=${cheapSharkGame.dealID}`
     });
     newGame.save();
     return newGame;
@@ -80,7 +81,8 @@ export async function createGame(cheapSharkGame: ICheapSharkGame) {
       release_date: cheapSharkGame.releaseDate,
       store_offers: store_offers,
       discount: cheapSharkGame.savings,
-      splash_art: splashArt
+      splash_art: splashArt,
+      cheapest_link: `https://www.cheapshark.com/redirect?dealID=${cheapSharkGame.dealID}`
     });
     newGame.save();
     return newGame;
