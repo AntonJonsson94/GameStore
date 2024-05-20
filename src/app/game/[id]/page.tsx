@@ -1,9 +1,7 @@
-'use client'
 import Image from "next/image"
-import { useRouter } from "next/router"
 const GamePage = ({ params }: { params: { id: string } }) => {
 
-  console.log(params.id);
+  console.log(params.id)
 
   return (
     <main className="container flex justify-center mx-auto">
