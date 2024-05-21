@@ -30,4 +30,3 @@ const nextConfig = {
 };
 
 export default nextConfig;
-"https://cdn1.epicgames.com/spt-assets/69576a28f7154fe9a0dce97508da5163/firestone-online-idle-rpg-7pyzs.png"
