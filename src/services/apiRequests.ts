@@ -24,7 +24,7 @@ export async function cheapSharkGameFromId(id: string) {
 }
 export async function cheapSharkGameFromTitle(title: string) {
   return await fetcher(
-    `https://www.cheapshark.com/api/1.0/games?title=${title}`
+    `https://www.cheapshark.com/api/1.0/deals?title=${title}&pageSize=10`
   );
 }
 
@@ -37,22 +37,4 @@ export async function getIgdbGame(name: string) {
     headers: headersIGDB,
   });
   return await res.json();
-}
-
-export async function rawgSearchGameFromTitle(title: string) {
-  return await fetcher(
-    `https://api.rawg.io/api/games?key=${process.env.RAWG_API_KEY}&search=${title}&pageSize=1`
-  );
-}
-
-export async function rawgScreenshots(title: string) {
-  return await fetcher(
-    `https://api.rawg.io/api/games/${title}/screenshots?key=${process.env.RAWG_API_KEY}`
-  );
-}
-
-export async function rawgGameFromID(id: number) {
-  return await fetcher(
-    `https://api.rawg.io/api/games/${id}?key=${process.env.RAWG_API_KEY}`
-  );
 }
