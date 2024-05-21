@@ -10,7 +10,6 @@ import Footer from "./components/Footer";
 
 const inter = Inter({ subsets: ["latin"] });
 
-
 export default function RootLayout({
   children,
 }: Readonly<{
@@ -21,7 +20,7 @@ export default function RootLayout({
     setIsSearchActive(true);
   };
   return (
-    <html data-theme="gamerTheme" className="" lang="en">
+    <html data-theme="gamerTheme" lang="en">
       <body className={`${inter.className}`}>
         <Header />
         {isSearchActive && (
@@ -30,8 +29,7 @@ export default function RootLayout({
             onInputChange={handleInputChange}
           />
         )}
-
-        {children}
+        <main className="w-2/3 mx-auto">{children}</main>
         <Footer />
       </body>
     </html>

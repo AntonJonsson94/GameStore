@@ -5,7 +5,6 @@ import Image from "next/image";
 
 export default function FrontPage() {
   const { games, gamesLoading } = useGames();
-  // console.log(games);
 
   return (
     <section className="flex flex-wrap place-items-center p-10 h-auto">
@@ -17,7 +16,7 @@ export default function FrontPage() {
           <span className="loading loading-ring loading-lg"></span>
         </div>
       )}
-      <div className="flex flex-wrap gap-6 w-10/12 m-auto h-auto justify-center">
+      <div className="grid grid-flow-rows gap-4 grid-cols-1 md:grid-cols-3 m-auto h-auto justify-center">
         {games &&
           games.map((game: IGame, index: number) => (
             <article
