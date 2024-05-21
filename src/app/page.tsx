@@ -3,12 +3,14 @@ import { IGame } from "@/models/interfaces";
 import Image from "next/image";
 import React, { useEffect, useState } from "react";
 import Searchbar from "./components/Searchbar";
+import { useRouter } from "next/navigation";
 
 export default function FrontPage() {
   const [games, setGames] = useState<IGame[] | null>(null);
   const [isLoading, setIsLoading] = useState(false);
   const [hasSearchInput, setHasSearchInput] = useState(false);
   const [isActive, setIsActive] = useState(false);
+  const router = useRouter(); // Get access to the router object
 
   useEffect(() => {
     setIsLoading(true);
@@ -29,12 +31,18 @@ export default function FrontPage() {
     setHasSearchInput(hasInput);
   };
 
+  const handleSearchNavigation = (input: string) => {
+    const url = `/search?query=${encodeURIComponent(input)}`;
+    router.push(url); // Correctly navigate to the dynamic route
+  };
+
   return (
     <>
       <Searchbar
         isActive={isActive}
         onInputChange={handleInputChange}
         key={"search"}
+        onNavigate={handleSearchNavigation}
       />
       {!isActive && (
         <section className="flex flex-wrap place-items-center p-10 h-auto">
