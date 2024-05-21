@@ -6,10 +6,6 @@ import Footer from "./components/Footer";
 
 const inter = Inter({ subsets: ["latin"] });
 
-export const metadata: Metadata = {
-  title: "Value Town",
-  description: "By Alexander Esbjörnsson and Anton Jonsson",
-};
 export default function RootLayout({
   children,
 }: Readonly<{
@@ -19,7 +15,7 @@ export default function RootLayout({
     <html data-theme="gamerTheme" lang="en">
       <body className={`${inter.className}`}>
         <Header />
-        {children}
+        <main className="w-2/3 mx-auto">{children}</main>
         <Footer />
       </body>
     </html>
