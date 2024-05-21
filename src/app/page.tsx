@@ -8,9 +8,8 @@ import { useRouter } from "next/navigation";
 export default function FrontPage() {
   const [games, setGames] = useState<IGame[] | null>(null);
   const [isLoading, setIsLoading] = useState(false);
-  const [hasSearchInput, setHasSearchInput] = useState(false);
   const [isActive, setIsActive] = useState(false);
-  const router = useRouter(); // Get access to the router object
+  const router = useRouter();
 
   useEffect(() => {
     setIsLoading(true);
@@ -28,12 +27,11 @@ export default function FrontPage() {
 
   const handleInputChange = (hasInput: boolean) => {
     setIsActive(hasInput);
-    setHasSearchInput(hasInput);
   };
 
   const handleSearchNavigation = (input: string) => {
-    const url = `/search?query=${encodeURIComponent(input)}`;
-    router.push(url); // Correctly navigate to the dynamic route
+    const url = `/search?query=${input}`;
+    router.push(url);
   };
 
   return (

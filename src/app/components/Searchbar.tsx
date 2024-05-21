@@ -43,19 +43,21 @@ export default function Searchbar({
   };
 
   const handleSearchNavigation = (input: string) => {
+    const encodedInput = encodeURIComponent(input).replace(/%20/g, "-");
+    const decodedInput = decodeURIComponent(encodedInput);
     if (input.trim().length === 0) {
       console.warn("Input cannot be empty");
       return;
     }
-    router.push(`/search/${input}`);
+    router.push(`/search/${decodedInput}`);
   };
 
   return (
     <div className="flex flex-col justify-center items-center">
       <input
         type="text"
-        placeholder="Type here"
-        className="input input-bordered input-primary input-lg w-full max-w-xs rounded-full mt-1"
+        placeholder="Search for a Game"
+        className="input input-bordered input-primary input-lg w-full max-w-xs rounded-full mt-1 text-center"
         onChange={handleInputChange}
         value={inputValue}
       />
