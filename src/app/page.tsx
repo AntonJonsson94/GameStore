@@ -1,29 +1,15 @@
 "use client";
-import { IGame } from "@/models/interfaces";
 import Image from "next/image";
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import Searchbar from "./components/Searchbar";
 import { useRouter } from "next/navigation";
+import useFetchGames from "@/hooks/use-games";
 
 export default function FrontPage() {
-  const [games, setGames] = useState<IGame[] | null>(null);
-  const [isLoading, setIsLoading] = useState(false);
   const [isActive, setIsActive] = useState(false);
   const router = useRouter();
 
-  useEffect(() => {
-    setIsLoading(true);
-    fetch("http://localhost:3000/api/deals")
-      .then((response) => response.json())
-      .then((data) => {
-        setGames(data);
-        setIsLoading(false);
-      })
-      .catch((error) => {
-        console.error("Error fetching games:", error);
-        setIsLoading(false);
-      });
-  }, []);
+  const { games, isLoading } = useFetchGames();
 
   const handleInputChange = (hasInput: boolean) => {
     setIsActive(hasInput);
@@ -55,7 +41,7 @@ export default function FrontPage() {
             <div className="flex flex-wrap gap-6 w-10/12 m-auto h-auto justify-center">
               {games?.map((game, index) => (
                 <article
-                  className="card w-96  shadow-xl border-2 border-cyan-500 rounded-none bg-accent"
+                  className="card w-96 shadow-xl border-2 border-cyan-500 rounded-none bg-accent"
                   key={index}
                 >
                   <figure className="px-10 pt-10">
@@ -70,7 +56,7 @@ export default function FrontPage() {
                     </div>
                   </figure>
 
-                  <div className="card-body ">
+                  <div className="card-body">
                     <div className="flex flex-col items-start">
                       <h2 className="card-title mb-5">{game.title}</h2>
                       <div className="divider divider-info m-1 w-full"></div>
