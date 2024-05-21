@@ -1,20 +1,10 @@
 import React, { useState, useEffect } from "react";
 import { useRouter } from "next/navigation";
-import SearchPage from "../search/page";
 
-type Props = {
-  isActive: boolean;
-  onInputChange: (hasInput: boolean) => void;
-  onNavigate?: (input: string) => void;
-};
-
-export default function Searchbar({
-  isActive,
-  onInputChange,
-  onNavigate,
-}: Props) {
+export default function Searchbar() {
   const [inputValue, setInputValue] = useState("");
   const [showLoader, setShowLoader] = useState(false);
+  const [placeholder, setPlaceholder] = useState("Search for a Game");
   const router = useRouter();
 
   const useDebounce = (value: string, delay: number) => {
@@ -33,12 +23,11 @@ export default function Searchbar({
     return debouncedValue;
   };
 
-  const debouncedInputValue = useDebounce(inputValue, 1000);
+  const debouncedInputValue = useDebounce(inputValue, 650);
 
   const handleInputChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     const newValue = event.target.value;
     setInputValue(newValue);
-    onInputChange(newValue.length > 0);
     setShowLoader(newValue.length > 0);
   };
 
@@ -49,14 +38,21 @@ export default function Searchbar({
       console.warn("Input cannot be empty");
       return;
     }
+    setPlaceholder(input);
     router.push(`/search/${decodedInput}`);
   };
+
+  useEffect(() => {
+    if (debouncedInputValue) {
+      handleSearchNavigation(debouncedInputValue);
+    }
+  });
 
   return (
     <div className="flex flex-col justify-center items-center">
       <input
         type="text"
-        placeholder="Search for a Game"
+        placeholder={placeholder}
         className="input input-bordered input-primary input-lg w-full max-w-xs rounded-full mt-1 text-center"
         onChange={handleInputChange}
         value={inputValue}
@@ -74,10 +70,6 @@ export default function Searchbar({
               </div>
             </div>
           </div>
-          <SearchPage
-            input={debouncedInputValue}
-            onNavigate={handleSearchNavigation}
-          />
         </>
       )}
     </div>
