@@ -5,19 +5,13 @@ const nextConfig = {
       serverComponentsExternalPackages: ["mongoose"],
    },
    images: {
-       remotePatterns: [
-           {
-               protocol: 'https',
-               hostname: 'media.rawg.io',
-           },
-           {
-               protocol: 'https',
-               hostname: 'images.igdb.com',
-           },
-           {
-               protocol: 'https',
-               hostname: 'cdn.cloudflare.steamstatic.com',
-           },
+    remotePatterns: [
+      {
+        protocol: 'https',
+        hostname: '**', 
+        port: '', 
+        pathname: '/**', 
+      },
        ],
    },
 };
