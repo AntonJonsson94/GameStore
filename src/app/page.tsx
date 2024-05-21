@@ -39,7 +39,9 @@ export default function FrontPage() {
             >
               <figure className="px-10 pt-10">
                 <div className="w-full max-h-32">
-                  <img
+                  <Image
+                    width={200}
+                    height={100}
                     src={game.splash_art}
                     alt={game.splash_art}
                     className="w-full"
