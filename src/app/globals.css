@@ -7,11 +7,11 @@
 html {
   background: rgb(23, 33, 68, 1);
   background: radial-gradient(
-    circle at top left,
-    rgba(0, 192, 180, 1) 55%,
+    circle at -15% -15%,
+    rgba(6, 152, 152, 1) 55%,
     rgba(23, 33, 68, 1) 55%
   );
-  background-size: 100vw 100vh;
+  background-size: 70vw 200vh;
   background-repeat: no-repeat;
 }
 
