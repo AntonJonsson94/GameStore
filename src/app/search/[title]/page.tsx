@@ -1,11 +1,7 @@
 "use client";
-import { ICheapSharkGame, IGame } from "@/models/interfaces";
-import { cheapSharkGameFromTitle } from "@/services/apiRequests";
-import React, { useEffect, useState } from "react";
-import Image from "next/image";
+import React from "react";
 import Searchbar from "@/app/components/Searchbar";
-import { set } from "mongoose";
-import { createGame } from "@/services/createGames";
+import useSearchGames from "@/hooks/useSearchGames";
 
 type Params = {
   title: string;
@@ -13,25 +9,14 @@ type Params = {
 
 export default function SearchResults({ params }: { params: Params }) {
   const { title } = params;
-  const [games, setGames] = useState<IGame[]>([]);
-  // useEffect(() => {
-  //   const fetchAndCreateGames = async () => {
-  //     try {
-  //       const cheapSharkgame = await cheapSharkGameFromTitle(title);
-  //       const gameData = await createGame(cheapSharkgame);
-  //       setGames(gameData); // Assuming gameData is of type IGame[]
-  //     } catch (error) {
-  //       console.error("Error fetching games:", error);
-  //     }
-  //   };
-
-  //   fetchAndCreateGames();
-  // }, [title]);
+  const { games, gamesLoading } = useSearchGames(title);
   return (
     <div className="flex flex-col items-center">
       <Searchbar />
       <div className="flex flex-wrap gap-6 w-10/12 m-6 h-auto justify-center">
-        {games.length > 0 ? (
+        {gamesLoading ? (
+          <p>Loading games...</p> // Or any loading indicator you prefer
+        ) : games.length > 0 ? (
           games.map((game, index) => (
             <article
               className="card w-96 shadow-xl border-2 border-cyan-500 rounded-none bg-accent"
