@@ -2,6 +2,7 @@
 import React from "react";
 import Searchbar from "@/app/components/Searchbar";
 import useSearchGames from "@/hooks/useSearchGames";
+import Loader from "@/app/components/Loader";
 
 type Params = {
   title: string;
@@ -10,12 +11,13 @@ type Params = {
 export default function SearchResults({ params }: { params: Params }) {
   const { title } = params;
   const { games, gamesLoading } = useSearchGames(title);
+
   return (
     <div className="flex flex-col items-center">
       <Searchbar />
       <div className="flex flex-wrap gap-6 w-10/12 m-6 h-auto justify-center">
         {gamesLoading ? (
-          <p>Loading games...</p> // Or any loading indicator you prefer
+          <Loader />
         ) : games.length > 0 ? (
           games.map((game, index) => (
             <article
