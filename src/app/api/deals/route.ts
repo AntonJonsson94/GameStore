@@ -2,17 +2,14 @@ import { IGame, ICheapSharkGame } from "@/models/interfaces";
 import { Game } from "@/models/schemas";
 import {
   cheapSharkFiveFreeGames,
-  cheapSharkDeals
+  cheapSharkDeals,
 } from "@/services/apiRequests";
 import { createGame } from "@/services/createGames";
-import { updatePrice } from "@/services/updateGame";
-
-const dbConnect = require("@/lib/dbConnect");
+import updateOrCreateGame from "@/services/updateOrCreateGame";
+import { updatePrice } from "@/services/updatePrice";
 
 export async function GET() {
   try {
-    await dbConnect();
-
     const games: any[] = [];
 
     const freeGames = await cheapSharkFiveFreeGames();
@@ -38,14 +35,7 @@ export async function GET() {
       .map((title) => games.find((game: any) => game.title === title))
       .slice(0, 6);
     for (const cheapSharkGame of cheapSharkGames) {
-      const existingGame = await Game.findOne({
-        cheap_shark_id: cheapSharkGame.gameID
-      });
-      if (!existingGame) {
-        gamesToDisplay.push(await createGame(cheapSharkGame));
-      } else {
-        gamesToDisplay.push(await updatePrice(cheapSharkGame));
-      }
+      gamesToDisplay.push(await updateOrCreateGame(cheapSharkGame));
     }
 
     return Response.json(gamesToDisplay);
