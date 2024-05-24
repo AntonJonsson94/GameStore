@@ -19,6 +19,7 @@ const useSearchGames = (title: string): UseGamesResult => {
         const cheapSharkGameresponse = await cheapSharkGameFromTitle(title);
         const cheapSharkDealData: ICheapSharkGame =
           await cheapSharkGameresponse.json();
+
         const gameDetailsResponse = await updateOrCreateGame(
           cheapSharkDealData
         );
