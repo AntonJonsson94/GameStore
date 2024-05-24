@@ -58,7 +58,7 @@ export default function Searchbar() {
         onChange={handleInputChange}
         value={inputValue}
       />
-      {/* {showLoader && (
+      {showLoader && (
         <>
           <div className="flex flex-col justify-center items-center mt-2">
             <p>Searching for games...</p>
@@ -67,7 +67,7 @@ export default function Searchbar() {
             </div>
           </div>
         </>
-      )} */}
+      )}
     </div>
   );
 }

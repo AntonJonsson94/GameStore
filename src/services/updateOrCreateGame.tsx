@@ -1,4 +1,4 @@
-import { ICheapSharkGame, IGDBGame } from "@/models/interfaces";
+import { ICheapSharkGame } from "@/models/interfaces";
 import { Game } from "@/models/schemas";
 import { createGame } from "./createGames";
 import { updatePrice } from "./updatePrice";

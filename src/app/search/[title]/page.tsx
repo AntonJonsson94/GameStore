@@ -1,8 +1,10 @@
 "use client";
 import React from "react";
 import Searchbar from "@/app/components/Searchbar";
-import useSearchGames from "@/hooks/useSearchGames";
 import Loader from "@/app/components/Loader";
+import useSearchGames from "@/hooks/useSearchGames";
+import { IGame } from "@/models/interfaces";
+import Image from "next/image";
 
 type Params = {
   title: string;
@@ -13,18 +15,30 @@ export default function SearchResults({ params }: { params: Params }) {
   const { games, gamesLoading } = useSearchGames(title);
 
   return (
-    <div className="flex flex-col items-center">
+    <section className="flex flex-wrap place-items-center p-10 h-auto">
       <Searchbar />
-      <div className="flex flex-wrap gap-6 w-10/12 m-6 h-auto justify-center">
-        {gamesLoading ? (
-          <Loader />
-        ) : games.length > 0 ? (
-          games.map((game, index) => (
+      {gamesLoading ?? <Loader />}
+      <div className="grid grid-flow-rows gap-4 grid-cols-1 md:grid-cols-3 m-auto h-auto justify-center">
+        {games &&
+          games.map((game: IGame, index: number) => (
             <article
-              className="card w-96 shadow-xl border-2 border-cyan-500 rounded-none bg-accent"
+              className="card w-96  shadow-xl border-2 border-cyan-500 rounded-none bg-accent"
               key={index}
             >
-              <div className="card-body">
+              <figure className="px-10 pt-10">
+                <div className="w-full max-h-32">
+                  <Image
+                    priority
+                    width={200}
+                    height={100}
+                    src={game.splash_art}
+                    alt={game.splash_art}
+                    className="w-full"
+                  />
+                </div>
+              </figure>
+
+              <div className="card-body ">
                 <div className="flex flex-col items-start">
                   <h2 className="card-title mb-5">{game.title}</h2>
                   <div className="divider divider-info m-1 w-full"></div>
@@ -39,11 +53,8 @@ export default function SearchResults({ params }: { params: Params }) {
                 </div>
               </div>
             </article>
-          ))
-        ) : (
-          <p>No games found for {title}.</p>
-        )}
+          ))}
       </div>
-    </div>
+    </section>
   );
 }
