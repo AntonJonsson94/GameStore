@@ -40,7 +40,7 @@ export async function GET() {
 
     return Response.json(gamesToDisplay);
   } catch (error) {
-    console.log(error);
+    console.error(error);
     return new Response("error");
   }
 }
