@@ -1,38 +1,18 @@
 "use client";
+import useGames from "@/hooks/useGames";
 import { IGame } from "@/models/interfaces";
 import Image from "next/image";
-import React, { useEffect, useState } from "react";
+import Loader from "./components/Loader";
 
 export default function FrontPage() {
-  const [games, setGames] = useState<IGame[] | null>(null);
-  const [isLoading, setIsLoading] = useState(false);
-
-  useEffect(() => {
-    setIsLoading(true);
-    fetch("http://localhost:3000/api/deals")
-      .then((response) => response.json())
-      .then((data) => {
-        setGames(data);
-        setIsLoading(false);
-      })
-      .catch((error) => {
-        console.error("Error fetching games:", error);
-        setIsLoading(false);
-      });
-  }, []);
+  const { games, gamesLoading } = useGames();
 
   return (
     <section className="flex flex-wrap place-items-center p-10 h-auto">
-      {isLoading ? (
-        <div className="flex flex-wrap gap-6 w-auto h-auto justify-center">
-          <span className="loading loading-ring loading-xs"></span>
-          <span className="loading loading-ring loading-sm"></span>
-          <span className="loading loading-ring loading-md"></span>
-          <span className="loading loading-ring loading-lg"></span>
-        </div>
-      ) : (
-        <div className="flex flex-wrap gap-6 w-10/12 m-auto h-auto justify-center">
-          {games?.map((game, index) => (
+      {gamesLoading ?? <Loader />}
+      <div className="grid grid-flow-rows gap-4 grid-cols-1 md:grid-cols-3 m-auto h-auto justify-center">
+        {games &&
+          games.map((game: IGame, index: number) => (
             <article
               className="card w-96  shadow-xl border-2 border-cyan-500 rounded-none bg-accent"
               key={index}
@@ -40,6 +20,7 @@ export default function FrontPage() {
               <figure className="px-10 pt-10">
                 <div className="w-full max-h-32">
                   <Image
+                    priority
                     width={200}
                     height={100}
                     src={game.splash_art}
@@ -65,8 +46,7 @@ export default function FrontPage() {
               </div>
             </article>
           ))}
-        </div>
-      )}
+      </div>
     </section>
   );
 }
