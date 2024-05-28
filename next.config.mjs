@@ -8,7 +8,7 @@ const nextConfig = {
         },
         {
             protocol: "https",
-            hostname:"cdn1.epicgames.com"
+            hostname: "cdn1.epicgames.com"
         },
         {
             protocol: "https",
@@ -21,8 +21,11 @@ const nextConfig = {
         {
             protocol: "https",
             hostname: "sttc.gamersgate.com"
+        }, {
+            protocol: "https",
+            hostname: "shared.cloudflare.steamstatic.com"
         }
-    ]
+        ]
     },
     experimental: {
         serverComponentsExternalPackages: ["mongoose"],
