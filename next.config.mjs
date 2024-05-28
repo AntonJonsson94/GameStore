@@ -21,6 +21,10 @@ const nextConfig = {
         {
             protocol: "https",
             hostname: "sttc.gamersgate.com"
+        },
+        {
+            protocol: "https",
+            hostname: "shared.cloudflare.steamstatic.com"
         }
     ]
     },
