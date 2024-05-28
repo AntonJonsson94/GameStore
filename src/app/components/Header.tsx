@@ -1,5 +1,6 @@
 import Link from "next/link";
 import React from "react";
+import Searchbar from "./Searchbar";
 
 export default function Header() {
   return (
