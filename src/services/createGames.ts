@@ -32,7 +32,6 @@ export async function createGame(cheapSharkGame: ICheapSharkGame) {
 
   if (igdbRes.length > 0) {
     const igdbGame = igdbRes[0];
-
     const screenshotUrls =
       igdbGame.screenshots?.map(
         (screenshot) =>
@@ -61,7 +60,7 @@ export async function createGame(cheapSharkGame: ICheapSharkGame) {
       metacritic_score: cheapSharkGame.metacriticScore,
       release_date: cheapSharkGame.releaseDate,
       screenshots: screenshots,
-      splash_art: splashArt,
+      splash_art: artworkUrls.length > 0 ? artworkUrls[0] : screenshotUrls[0],
       videos: videoUrls,
       store_offers: store_offers,
       discount: cheapSharkGame.savings,

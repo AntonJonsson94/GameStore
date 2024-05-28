@@ -1,18 +1,18 @@
 import { IGame, ICheapSharkGame } from "@/models/interfaces";
-import { Game } from "@/models/schemas";
 import {
   cheapSharkFiveFreeGames,
   cheapSharkDeals,
 } from "@/services/apiRequests";
-import { createGame } from "@/services/createGames";
 import updateOrCreateGame from "@/services/updateOrCreateGame";
-import { updatePrice } from "@/services/updatePrice";
 
 export async function GET() {
   try {
     const games: any[] = [];
 
-    const freeGames = await cheapSharkFiveFreeGames();
+    const freeGames = await fetch(
+      "https://www.cheapshark.com/api/1.0/deals?sortBy=Price&pageSize=5",
+      { next: { revalidate: 86400 } }
+    ).then((res) => res.json());
 
     freeGames.forEach((game: any) => {
       if (game.salePrice === "0.00") {
