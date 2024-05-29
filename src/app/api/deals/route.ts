@@ -1,7 +1,7 @@
 import { IGame, ICheapSharkGame } from "@/models/interfaces";
 import {
   cheapSharkFiveFreeGames,
-  cheapSharkDeals,
+  cheapSharkDeals
 } from "@/services/apiRequests";
 import updateOrCreateGame from "@/services/updateOrCreateGame";
 
@@ -10,7 +10,7 @@ export async function GET() {
     const games: any[] = [];
 
     const freeGames = await fetch(
-      "https://www.cheapshark.com/api/1.0/deals?sortBy=Price&pageSize=5",
+      "https://www.cheapshark.com/api/1.0/deals?sortBy=Price",
       { next: { revalidate: 86400 } }
     ).then((res) => res.json());
 
@@ -33,12 +33,13 @@ export async function GET() {
       new Set(games.map((game: ICheapSharkGame) => game.title))
     )
       .map((title) => games.find((game: any) => game.title === title))
-      .slice(0, 6);
+      .slice(0, 10);
     for (const cheapSharkGame of cheapSharkGames) {
-      gamesToDisplay.push(await updateOrCreateGame(cheapSharkGame));
+      const gameToPush = await updateOrCreateGame(cheapSharkGame);
+      gameToPush && gamesToDisplay.push(gameToPush);
     }
 
-    return Response.json(gamesToDisplay);
+    return Response.json(gamesToDisplay.slice(0, 6));
   } catch (error) {
     console.error(error);
     return new Response("error");
