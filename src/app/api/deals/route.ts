@@ -1,18 +1,18 @@
 import { IGame, ICheapSharkGame } from "@/models/interfaces";
-import { Game } from "@/models/schemas";
 import {
   cheapSharkFiveFreeGames,
-  cheapSharkDeals,
+  cheapSharkDeals
 } from "@/services/apiRequests";
-import { createGame } from "@/services/createGames";
 import updateOrCreateGame from "@/services/updateOrCreateGame";
-import { updatePrice } from "@/services/updatePrice";
 
 export async function GET() {
   try {
     const games: any[] = [];
 
-    const freeGames = await cheapSharkFiveFreeGames();
+    const freeGames = await fetch(
+      "https://www.cheapshark.com/api/1.0/deals?sortBy=Price",
+      { next: { revalidate: 86400 } }
+    ).then((res) => res.json());
 
     freeGames.forEach((game: any) => {
       if (game.salePrice === "0.00") {
@@ -33,14 +33,21 @@ export async function GET() {
       new Set(games.map((game: ICheapSharkGame) => game.title))
     )
       .map((title) => games.find((game: any) => game.title === title))
-      .slice(0, 6);
+      .slice(0, 10);
     for (const cheapSharkGame of cheapSharkGames) {
-      gamesToDisplay.push(await updateOrCreateGame(cheapSharkGame));
+      try {
+        const gameToPush = await updateOrCreateGame(cheapSharkGame);
+        if (gameToPush) {
+          gamesToDisplay.push(gameToPush);
+        }
+      } catch (error) {
+        console.error("Error inserting to DB:", error);
+      }
     }
 
-    return Response.json(gamesToDisplay);
+    return Response.json(gamesToDisplay.slice(0, 6));
   } catch (error) {
     console.error(error);
-    return new Response("error");
+    return Response.error();
   }
 }

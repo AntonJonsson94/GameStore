@@ -12,13 +12,9 @@ export async function updatePrice(game: ICheapSharkGame) {
     store_offers: deals
   };
   try {
-    const res = await Game.findOneAndUpdate(
-      { cheap_shark_id: game.gameID },
-      update,
-      {
-        new: true
-      }
-    );
+    const res = await Game.findByIdAndUpdate(game.gameID, update, {
+      new: true
+    });
     return res;
   } catch (error) {
     console.error("Error updating game:", error);

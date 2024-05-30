@@ -18,14 +18,14 @@ const StoreOfferSchema = new Schema<IStoreOffer>({
 });
 
 const GameSchema = new Schema<IGame>({
+  _id: { type: String, required: true },
   title: { type: String, required: true },
   description: { type: String, required: false },
-  splash_art: { type: String, required: false },
+  splash_art: { type: String, required: true },
   lowest_price: { type: String, required: true },
   full_price: { type: String, required: true },
   release_date: { type: String, required: true },
   metacritic_score: { type: String, required: false },
-  cheap_shark_id: { type: String, required: true },
   screenshots: { type: [String], required: false },
   videos: { type: [String], required: false },
   store_offers: { type: [StoreOfferSchema], required: true },
