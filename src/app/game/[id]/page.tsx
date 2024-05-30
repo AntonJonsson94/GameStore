@@ -1,13 +1,19 @@
+import { IGame } from "@/models/interfaces"
 import Image from "next/image"
-const GamePage = ({ params }: { params: { id: string } }) => {
 
-  fetch(`http://localhost:3000/api/game/${params.id}`).then(res => res.json()).then(data => console.log(data))
+export default async function GamePage({ params }: { params: { id: string } }) {
+
+  async function getGame() {
+    const res = await fetch(`http://localhost:3000/api/game/${params.id}`)
+    if (!res.ok) return
+    return res.json()
+  }
+
+  const game: IGame = await getGame()
 
   return (
     <main className="container flex justify-center mx-auto">
-      <Image priority alt="hero-image" width="460" height="215" src="https://cdn.cloudflare.steamstatic.com/steam/apps/1139900/header.jpg?t=1710442474" />
+      <h1>{game.title}</h1>
     </main>
   )
 }
-
-export default GamePage
