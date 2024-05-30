@@ -35,13 +35,19 @@ export async function GET() {
       .map((title) => games.find((game: any) => game.title === title))
       .slice(0, 10);
     for (const cheapSharkGame of cheapSharkGames) {
-      const gameToPush = await updateOrCreateGame(cheapSharkGame);
-      gameToPush && gamesToDisplay.push(gameToPush);
+      try {
+        const gameToPush = await updateOrCreateGame(cheapSharkGame);
+        if (gameToPush) {
+          gamesToDisplay.push(gameToPush);
+        }
+      } catch (error) {
+        console.error("Error inserting to DB:", error);
+      }
     }
 
     return Response.json(gamesToDisplay.slice(0, 6));
   } catch (error) {
     console.error(error);
-    return new Response("error");
+    return Response.error();
   }
 }

@@ -6,11 +6,12 @@ import { useState } from "react";
 export default function FrontPage() {
 
   const [games, setGames] = useState<IGame[]>()
-  const getGames = async (): Promise<Array<IGame>> => {
-    return await fetch("http://localhost:3000/api/deals").then(data => data.json())
-  }
+  const getGames = async (): Promise<Array<IGame>> => await fetch("http://localhost:3000/api/deals").then(data => data.json())
+
 
   getGames().then(games => setGames(games))
+
+
 
 
   return (
