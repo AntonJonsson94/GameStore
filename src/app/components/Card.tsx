@@ -33,9 +33,11 @@ const Card = ({ game }: CardProps) => {
           {game.description}
         </p>
         <div className="card-actions justify-end">
-          <button className="btn btn-primary rounded-full ">
-            {game.lowest_price}$
-          </button>
+          <Link target="_blank" href={game.cheapest_link}>
+            <button className="btn btn-primary rounded-full ">
+              {game.lowest_price}$
+            </button>
+          </Link>
         </div>
       </div>
     </article>
