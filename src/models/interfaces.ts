@@ -53,7 +53,7 @@ export interface IStoreOffer {
   price: string;
   retailPrice: string;
   savings: string;
-  link?: string;
+  link: string;
 }
 
 export interface IScreenshot {

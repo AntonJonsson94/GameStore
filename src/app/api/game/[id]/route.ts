@@ -15,7 +15,7 @@ export async function GET(
   }
 
   try {
-    const game = await Game.findById(id).lean();
+    const game = await Game.findById(id);
     return Response.json(game);
   } catch (error) {
     console.error("Error getting game from DB: ");

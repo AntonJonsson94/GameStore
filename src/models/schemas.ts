@@ -14,7 +14,7 @@ const StoreOfferSchema = new Schema<IStoreOffer>({
   retailPrice: { type: String, required: true },
   savings: { type: String, required: true },
   storeID: { type: String, required: true },
-  link: { type: String, required: false },
+  link: { type: String, required: true },
 });
 
 const GameSchema = new Schema<IGame>({

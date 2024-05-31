@@ -1,10 +1,10 @@
-import { IStore } from "@/models/interfaces";
+import { IGame, IStore, IStoreOffer } from "@/models/interfaces";
 import { lowerCaseNoSpace } from "@/utils/cleanText";
 import Image from "next/image";
 import Link from "next/link";
 
 type Props = {
-  id: string;
+  offer: IStoreOffer;
 };
 
 async function GetStore(id: string) {
@@ -14,8 +14,9 @@ async function GetStore(id: string) {
   return await res.json();
 }
 
-export default async function StoreCard({ id }: Props) {
-  const store: IStore = await GetStore(id);
+export default async function StoreCard({ offer }: Props) {
+  const store: IStore = await GetStore(offer.storeID);
+  const isSale: Boolean = Math.round(Number(offer.savings)) > 0;
   return (
     <div className="card rounded-md card-compact w-80 shadow-xl">
       <figure className="bg-white p-12">
@@ -31,13 +32,30 @@ export default async function StoreCard({ id }: Props) {
           {store.name.toUpperCase()}
         </h1>
         <div className="flex flex-col gap-4">
-          <h1 className=" font-normal text-4xl text-info bg-primary p-4 text-center">
-            100
-          </h1>
+          {isSale ? (
+            <h1 className=" font-normal text-4xl text-info bg-primary p-4 text-center">
+              <span className="text-base-100">
+                <span className="line-through">{offer.retailPrice}</span> -
+                {Math.round(Number(offer.savings))}%
+              </span>
+              <span className="text-info"> = {offer.price}</span>
+            </h1>
+          ) : (
+            <h1 className=" font-normal text-4xl text-info bg-secondary p-4 text-center">
+              {offer.price}
+            </h1>
+          )}
           <div className="card-actions justify-center mb-4">
-            <button className="btn btn-primary rounded-none">
-              <Link href={"google.com"} target="_blank">
-                <h1 className="font-normal text-2xl  text-info">Buy Now</h1>
+            <button
+              className={`btn ${
+                isSale ? "btn-primary" : "btn-secondary"
+              } rounded-none`}
+            >
+              <Link
+                href={`https://www.cheapshark.com/redirect?dealID=${offer.dealID}`}
+                target="_blank"
+              >
+                <h1 className="font-normal text-2xl  text-info">BUY NOW</h1>
               </Link>
             </button>
           </div>

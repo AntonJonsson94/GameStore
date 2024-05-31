@@ -20,6 +20,7 @@ export async function createGame(cheapSharkGame: ICheapSharkGame) {
       link: `https://www.cheapshark.com/redirect?dealID=${deal.dealID}`,
     };
   });
+
   if (igdbRes.length > 0) {
     const igdbGame = igdbRes[0];
     const screenshotUrls =

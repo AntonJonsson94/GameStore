@@ -1,7 +1,7 @@
 import Divider from "@/app/components/Divider";
 import StoreCard from "@/app/components/StoreCard";
-import { IGame } from "@/models/interfaces";
-import Image from "next/image";
+import { IGame, IStore, IStoreOffer } from "@/models/interfaces";
+import { StoreOffer } from "@/models/schemas";
 import Link from "next/link";
 
 export default async function GamePage({ params }: { params: { id: string } }) {
@@ -12,7 +12,9 @@ export default async function GamePage({ params }: { params: { id: string } }) {
   }
 
   const game: IGame = await getGame();
-
+  const offers = game.store_offers.map((offer) => (
+    <StoreCard key={offer.dealID} offer={offer} />
+  ));
   return (
     <>
       <section id="game-info" className="flex flex-column justify-between">
@@ -44,7 +46,9 @@ export default async function GamePage({ params }: { params: { id: string } }) {
 
       <Divider />
 
-      <StoreCard id={game.store_offers[0].storeID} />
+      <div className="grid gap-16 grid-cols-1 md:grid-cols-3 lg:grid-cols-4">
+        {offers}
+      </div>
     </>
   );
 }
