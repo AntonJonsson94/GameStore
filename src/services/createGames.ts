@@ -1,11 +1,11 @@
 import { ICheapSharkGame, IGDBGame, IStoreOffer } from "@/models/interfaces";
 import { Game } from "@/models/schemas";
 import { cheapSharkGameFromId, getIgdbGame } from "@/services/apiRequests";
-import { cleanString } from "@/utils/cleanText";
+import { removePlattform } from "@/utils/cleanText";
 
 export async function createGame(cheapSharkGame: ICheapSharkGame) {
   const igdbRes: IGDBGame[] = await getIgdbGame(
-    cleanString(cheapSharkGame.title)
+    removePlattform(cheapSharkGame.title)
   );
 
   const cheapSharkGameWithDeals = await cheapSharkGameFromId(
@@ -17,7 +17,7 @@ export async function createGame(cheapSharkGame: ICheapSharkGame) {
   const store_offers: IStoreOffer[] = deals.map((deal) => {
     return {
       ...deal,
-      link: `https://www.cheapshark.com/redirect?dealID=${deal.dealID}`
+      link: `https://www.cheapshark.com/redirect?dealID=${deal.dealID}`,
     };
   });
   if (igdbRes.length > 0) {
@@ -71,7 +71,7 @@ export async function createGame(cheapSharkGame: ICheapSharkGame) {
       videos: videoUrls,
       store_offers: store_offers,
       discount: cheapSharkGame.savings,
-      cheapest_link: `https://www.cheapshark.com/redirect?dealID=${cheapSharkGame.dealID}`
+      cheapest_link: `https://www.cheapshark.com/redirect?dealID=${cheapSharkGame.dealID}`,
     });
 
     newGame.save();

@@ -56,7 +56,6 @@ export interface IStoreOffer {
   link?: string;
 }
 
-
 export interface IScreenshot {
   id?: string;
   image: string;
@@ -68,7 +67,6 @@ export interface IScreenshot {
 export interface IStore {
   id: string;
   name: string;
-  image_url: string;
 }
 export interface ICheapSharkGame {
   internalName: string;

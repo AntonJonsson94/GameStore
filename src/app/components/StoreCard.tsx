@@ -1,3 +1,5 @@
+import { IStore } from "@/models/interfaces";
+import { lowerCaseNoSpace } from "@/utils/cleanText";
 import Image from "next/image";
 import Link from "next/link";
 
@@ -13,15 +15,20 @@ async function GetStore(id: string) {
 }
 
 export default async function StoreCard({ id }: Props) {
-  await GetStore(id);
+  const store: IStore = await GetStore(id);
   return (
     <div className="card rounded-md card-compact w-80 shadow-xl">
       <figure className="bg-white p-12">
-        <Image src="/epic.png" alt="Shoes" width={150} height={150} />
+        <Image
+          src={`/img/stores/${store.id}.png`}
+          alt={store.name}
+          width={150}
+          height={150}
+        />
       </figure>
       <div className=" rounded-b-md bg-accent px-0 m-0">
         <h1 className="card-title text-5xl font-normal justify-center text-center py-4 text-info mx-auto">
-          EPIC GAMES
+          {store.name.toUpperCase()}
         </h1>
         <div className="flex flex-col gap-4">
           <h1 className=" font-normal text-4xl text-info bg-primary p-4 text-center">
