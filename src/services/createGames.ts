@@ -21,7 +21,6 @@ export async function createGame(cheapSharkGame: ICheapSharkGame) {
     };
   });
   if (igdbRes.length > 0) {
-    console.log("CURRENT GAME: ", cheapSharkGame.title);
     const igdbGame = igdbRes[0];
     const screenshotUrls =
       igdbGame.screenshots?.map(
