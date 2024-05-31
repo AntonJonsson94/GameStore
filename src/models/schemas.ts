@@ -6,7 +6,7 @@ const ScreenshotSchema = new Schema({
   image: { type: String, required: true },
   width: { type: String, required: false },
   height: { type: String, required: false },
-  is_deleted: { type: Boolean, required: false }
+  is_deleted: { type: Boolean, required: false },
 });
 const StoreOfferSchema = new Schema<IStoreOffer>({
   dealID: { type: String, required: true },
@@ -14,7 +14,7 @@ const StoreOfferSchema = new Schema<IStoreOffer>({
   retailPrice: { type: String, required: true },
   savings: { type: String, required: true },
   storeID: { type: String, required: true },
-  link: { type: String, required: false }
+  link: { type: String, required: true },
 });
 
 const GameSchema = new Schema<IGame>({
@@ -30,13 +30,12 @@ const GameSchema = new Schema<IGame>({
   videos: { type: [String], required: false },
   store_offers: { type: [StoreOfferSchema], required: true },
   discount: { type: String, required: true },
-  cheapest_link: { type: String, required: true }
+  cheapest_link: { type: String, required: true },
 });
 
 const StoreSchema = new Schema<IStore>({
   id: { type: String, required: true },
   name: { type: String, required: true },
-  image_url: { type: String, required: true }
 });
 
 const StoreOffer =

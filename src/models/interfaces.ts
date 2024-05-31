@@ -53,9 +53,8 @@ export interface IStoreOffer {
   price: string;
   retailPrice: string;
   savings: string;
-  link?: string;
+  link: string;
 }
-
 
 export interface IScreenshot {
   id?: string;
@@ -68,7 +67,6 @@ export interface IScreenshot {
 export interface IStore {
   id: string;
   name: string;
-  image_url: string;
 }
 export interface ICheapSharkGame {
   internalName: string;
