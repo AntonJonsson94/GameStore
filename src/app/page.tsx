@@ -10,7 +10,6 @@ export default function FrontPage() {
 
   return (
     <section className="flex flex-wrap place-items-center p-10 h-auto">
-      <Searchbar />
       {gamesLoading ?? <Loader />}
       <div className="grid grid-flow-rows gap-4 grid-cols-1 md:grid-cols-3 m-auto h-auto justify-center">
         {games &&
