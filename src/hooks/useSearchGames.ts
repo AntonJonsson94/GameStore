@@ -16,14 +16,20 @@ const useSearchGames = (title: string): UseGamesResult => {
     const fetchGames = async () => {
       setGamesLoading(true);
       try {
-        const cheapSharkGameresponse = await cheapSharkGameFromTitle(title);
-        const cheapSharkDealData: ICheapSharkGame =
-          await cheapSharkGameresponse.json();
+        const cheapSharkGameresponse: ICheapSharkGame[] = await cheapSharkGameFromTitle(title);
+        const gamesToDisplay: IGame[] = [];
 
-        const gameDetailsResponse = await updateOrCreateGame(
-          cheapSharkDealData
-        );
-        setGames(gameDetailsResponse);
+        for (const game of cheapSharkGameresponse) {
+          try {
+            const gameToPush = await updateOrCreateGame(game);
+            if (gameToPush) {
+              gamesToDisplay.push(gameToPush);
+            }
+          } catch (error) {
+            console.error("Error inserting to DB:", error);
+          }
+        }
+        setGames(gamesToDisplay);
       } catch (error) {
         console.error(error);
       } finally {
