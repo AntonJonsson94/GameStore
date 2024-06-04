@@ -6,7 +6,7 @@ const fetcher = async (url: string) => {
 const headersIGDB = {
   "Client-ID": process.env.IGDB_CLIENT_ID || "",
   Authorization: `Bearer ${process.env.IGDB_ACCESS_TOKEN}` || "",
-  "Content-Type": "application/json",
+  "Content-Type": "application/json"
 };
 
 export async function cheapSharkFiveFreeGames() {
@@ -33,8 +33,9 @@ export async function getIgdbGame(name: string) {
     method: "POST",
     body: `
     search "${name}"; 
-    fields name, artworks.*, screenshots.*, videos.*, summary, cover.*;`,
-    headers: headersIGDB,
+    fields name, artworks.*, screenshots.*, videos.*, summary, cover.*;
+    where platforms = (6);`,
+    headers: headersIGDB
   });
   return await res.json();
 }
