@@ -6,10 +6,7 @@ import Footer from "./components/Footer";
 import Searchbar from "./components/Searchbar";
 
 const inter = Inter({ subsets: ["latin"] });
-export const metadata: Metadata = {
-  title: "Value Town",
-  description: "The Best Deals in Gaming"
-}
+
 export default function RootLayout({
   children,
 }: Readonly<{
