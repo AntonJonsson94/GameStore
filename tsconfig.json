@@ -19,7 +19,9 @@
     ],
     "paths": {
       "@/*": ["./src/*", "./lib/*"]
-    }
+    },
+    "target": "es2015",
+    "downlevelIteration": true
   },
   "include": ["next-env.d.ts", "**/*.ts", "**/*.tsx", ".next/types/**/*.ts", "src/lib/mongo/mongodb.js"],
   "exclude": ["node_modules"]
