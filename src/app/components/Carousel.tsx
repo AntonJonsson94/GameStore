@@ -1,7 +1,7 @@
 "use client";
 
 import Image from "next/image";
-import { useState } from "react";
+import { useMemo, useState } from "react";
 type Props = {
   content: string[];
 };
@@ -19,11 +19,36 @@ export default function Carousel({ content }: Props) {
       prevIndex === 0 ? content.length - 1 : prevIndex - 1
     );
   };
+
   return (
-    <div>
-      <Image priority src={content[activeIndex]} height={450} width={1000} alt="" />
-      <button onClick={handlePrevious}>Previous</button>
-      <button onClick={handleNext}>Next</button>
+    <div className="relative">
+      <button className="absolute left-0 top-1/2" onClick={handlePrevious}>
+        <Image
+          priority
+          alt=""
+          width={40}
+          height={40}
+          src="/img/arrow_prev.svg"
+        />
+      </button>
+      <button className="absolute right-0 top-1/2" onClick={handleNext}>
+        <Image
+          priority
+          alt="next"
+          width={40}
+          height={40}
+          src="/img/arrow_next.svg"
+        />
+      </button>
+
+      <Image
+        className="mx-auto shadow-inner shadow-red-600"
+        priority
+        src={content[activeIndex]}
+        height={550}
+        width={1000}
+        alt=""
+      />
     </div>
   );
 }
