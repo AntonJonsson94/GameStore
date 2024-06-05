@@ -1,10 +1,8 @@
 import React, { useState, useEffect } from "react";
 import { useRouter } from "next/navigation";
-import Loader from "./Loader";
 
 export default function Searchbar() {
   const [inputValue, setInputValue] = useState("");
-  const [showLoader, setShowLoader] = useState(false);
   const [placeholder, setPlaceholder] = useState("Search for a Game");
   const router = useRouter();
 
@@ -29,25 +27,23 @@ export default function Searchbar() {
   const handleInputChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     const newValue = event.target.value;
     setInputValue(newValue);
-    setShowLoader(newValue.length > 0);
   };
 
   const handleSearchNavigation = (input: string) => {
-    const encodedInput = encodeURIComponent(input).replace(/%20/g, "-");
-    const decodedInput = decodeURIComponent(encodedInput);
     if (input.trim().length === 0) {
       console.warn("Input cannot be empty");
       return;
     }
+    const encodedInput = encodeURIComponent(input).replace(/%20/g, "-");
     setPlaceholder(input);
-    router.push(`/search/${decodedInput}`);
+    router.push(`/search/${encodedInput}`);
   };
 
   useEffect(() => {
     if (debouncedInputValue) {
       handleSearchNavigation(debouncedInputValue);
     }
-  });
+  }, [debouncedInputValue]);
 
   return (
     <div className="flex flex-col justify-center items-center">
@@ -58,16 +54,6 @@ export default function Searchbar() {
         onChange={handleInputChange}
         value={inputValue}
       />
-      {showLoader && (
-        <>
-          <div className="flex flex-col justify-center items-center mt-2">
-            <p>Searching for games...</p>
-            <div className="flex justify-center">
-              <Loader />
-            </div>
-          </div>
-        </>
-      )}
     </div>
   );
 }
