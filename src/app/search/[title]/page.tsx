@@ -4,6 +4,7 @@ import { IGame } from "@/models/interfaces";
 import Card from "@/app/components/Card";
 import Loader from "@/app/components/Loader";
 import Searchbar from "@/app/components/Searchbar";
+import Divider from "@/app/components/Divider";
 
 type Params = {
   title: string;
@@ -41,6 +42,7 @@ export default function SearchResults({ params }: { params: Params }) {
   return (
     <section className="flex flex-col justify-center items-center p-10 h-auto">
       <Searchbar />
+      <Divider/>
       {loading ? (
         <div className="flex flex-col items-center mt-10">
           <Loader />
