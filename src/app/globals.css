@@ -16,8 +16,13 @@ html {
 }
 
 @layer components {
-  h1 {
-    @apply font-bebas-neue;
+  h1,
+  h2,
+  h3,
+  h4,
+  h5,
+  h6 {
+    @apply font-bebas-neue text-info font-normal;
   }
 
   p {
