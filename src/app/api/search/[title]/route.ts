@@ -9,9 +9,10 @@ export async function GET(
     try {
 
         const cheapsharkgameResponse: ICheapSharkGame[] = await fetch(
-            `https://www.cheapshark.com/api/1.0/deals?title=${params.title}&pageSize=10`,
+            `https://www.cheapshark.com/api/1.0/deals?title=${params.title}&pageSize=20`,
           { next: { revalidate: 86400 } }
         ).then((res) => res.json());
+    
     
 
         const gamesToDisplay: IGame[] = [];
@@ -26,7 +27,7 @@ export async function GET(
             console.error("Error inserting to DB:", error);
           }
         }
-    
+        
         return Response.json(gamesToDisplay);
       } catch (error) {
         console.error(error);
