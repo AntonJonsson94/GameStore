@@ -21,7 +21,10 @@ export default async function GamePage({ params }: { params: { id: string } }) {
   return (
     <>
       <section id="game-info" className="flex mt-6 flex-column justify-between">
-        <h1 className="text-6xl text-info w-1/2">{game.title}</h1>
+      <h1 className={` text-${game.title.length > 20 ? '4xl' : '8xl'} text-info w-1/2`}>
+  {game.title}
+</h1>
+
         <p>
           <h1 className="text-info text-5xl">BEST PRICE</h1>
           <span className="stroke-current text-info line-through">
