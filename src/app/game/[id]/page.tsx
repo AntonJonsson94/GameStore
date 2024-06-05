@@ -6,6 +6,7 @@ import { IGame } from "@/models/interfaces";
 import Link from "next/link";
 import Image from "next/image";
 import { useEffect, useMemo, useState } from "react";
+import Loader from "@/app/components/Loader";
 
 export default function GamePage({ params }: { params: { id: string } }) {
   const [game, setGame] = useState<IGame>();
@@ -86,7 +87,7 @@ export default function GamePage({ params }: { params: { id: string } }) {
           )}
         </>
       ) : (
-        <div>loading...</div>
+        <Loader />
       )}
     </>
   );
