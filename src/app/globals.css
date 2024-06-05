@@ -23,4 +23,8 @@ html {
   p {
     @apply font-poppins;
   }
+
+  input {
+    @apply font-poppins;
+  }
 }
