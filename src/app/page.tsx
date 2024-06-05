@@ -1,16 +1,16 @@
 "use client";
 import { IGame } from "@/models/interfaces";
 import Card from "./components/Card";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 
 export default function FrontPage() {
+  const [games, setGames] = useState<IGame[]>();
 
-  const [games, setGames] = useState<IGame[]>()
-  const getGames = async (): Promise<Array<IGame>> => await fetch("http://localhost:3000/api/deals").then(data => data.json())
-  getGames().then(games => setGames(games))
-
-
-
+  useEffect(() => {
+    fetch("http://localhost:3000/api/deals")
+      .then((res) => res.json())
+      .then((games) => setGames(games));
+  }, []);
 
   return (
     <section className="flex flex-wrap place-items-center p-10 h-auto">
