@@ -8,7 +8,7 @@ type CardProps = {
 
 const Card = ({ game }: CardProps) => {
   return (
-    <article className="card   shadow-xl border-2 border-cyan-500 rounded-none bg-accent">
+    <article className="card   shadow-xl border-2 border-secondary rounded-none bg-accent">
       <figure className="px-10 pt-10">
         <div className="w-full max-h-32">
           <Image
@@ -34,8 +34,8 @@ const Card = ({ game }: CardProps) => {
         </p>
         <div className="card-actions justify-end">
           <Link target="_blank" href={game.cheapest_link}>
-            <button className="btn btn-primary rounded-full ">
-              {game.lowest_price}$
+            <button className="btn btn-primary  rounded-full ">
+              {game.lowest_price}€
             </button>
           </Link>
         </div>

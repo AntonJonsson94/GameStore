@@ -1,4 +1,4 @@
-"use client"
+"use client";
 import { Inter } from "next/font/google";
 import "./globals.css";
 import Header from "./components/Header";
@@ -16,7 +16,6 @@ export default function RootLayout({
     <html data-theme="gamerTheme" lang="en">
       <body className={`${inter.className}`}>
         <Header />
-        <Searchbar/>
         <main className="w-2/3 mx-auto">{children}</main>
         <Footer />
       </body>

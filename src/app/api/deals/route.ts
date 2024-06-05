@@ -1,8 +1,5 @@
 import { IGame, ICheapSharkGame } from "@/models/interfaces";
-import {
-  cheapSharkFiveFreeGames,
-  cheapSharkDeals
-} from "@/services/apiRequests";
+import { cheapSharkDeals } from "@/services/apiRequests";
 import updateOrCreateGame from "@/services/updateOrCreateGame";
 
 export async function GET() {
@@ -11,7 +8,7 @@ export async function GET() {
 
     const freeGames = await fetch(
       "https://www.cheapshark.com/api/1.0/deals?sortBy=Price",
-      { next: { revalidate: 86400 } }
+      { next: { revalidate: 60 } }
     ).then((res) => res.json());
 
     freeGames.forEach((game: any) => {
@@ -20,7 +17,10 @@ export async function GET() {
       }
     });
 
-    const highestDealRatedGames = await cheapSharkDeals();
+    const highestDealRatedGames: ICheapSharkGame[] = await fetch(
+      "https://www.cheapshark.com/api/1.0/deals",
+      { next: { revalidate: 60 } }
+    ).then((res) => res.json());
     highestDealRatedGames.forEach((game: any) => {
       if (game.dealRating === "10.0") {
         games.push(game);

@@ -4,25 +4,29 @@ import Image from "next/image";
 import { useMemo, useState } from "react";
 type Props = {
   content: string[];
+  onNext?: () => void;
+  onPrev?: () => void;
 };
-export default function Carousel({ content }: Props) {
+export default function Carousel({ content, onNext, onPrev }: Props) {
   const [activeIndex, setActiveIndex] = useState(0);
 
   const handleNext = () => {
     setActiveIndex((prevIndex) =>
       prevIndex === content.length - 1 ? 0 : prevIndex + 1
     );
+    onNext && onNext();
   };
 
   const handlePrevious = () => {
     setActiveIndex((prevIndex) =>
       prevIndex === 0 ? content.length - 1 : prevIndex - 1
     );
+    onPrev && onPrev();
   };
 
   return (
-    <div className="relative w-fit mx-auto">
-      <button className="absolute left-0 top-1/2" onClick={handlePrevious}>
+    <div className="relative mx-auto">
+      <button className="absolute -left-6 top-1/2" onClick={handlePrevious}>
         <Image
           priority
           alt=""
@@ -31,7 +35,7 @@ export default function Carousel({ content }: Props) {
           src="/img/arrow_prev.svg"
         />
       </button>
-      <button className="absolute right-0  top-1/2" onClick={handleNext}>
+      <button className="absolute -right-6  top-1/2" onClick={handleNext}>
         <Image
           priority
           alt="next"
@@ -42,10 +46,11 @@ export default function Carousel({ content }: Props) {
       </button>
 
       <Image
+        className="w-[1000px] h-[600px]"
         priority
         src={content[activeIndex]}
-        height={550}
-        width={700}
+        height={600}
+        width={1000}
         alt=""
       />
     </div>
