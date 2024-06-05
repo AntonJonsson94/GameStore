@@ -21,7 +21,7 @@ export default function StoreCard({ offer }: Props) {
   return (
     <>
       {store ? (
-        <div className="card rounded-md card-compact w-80 shadow-xl">
+        <div className="card rounded-md card-compact w-60 md:w-80 shadow-xl">
           <figure className="bg-white p-12">
             <Image
               src={`/img/stores/${store.id}.png`}
@@ -31,7 +31,7 @@ export default function StoreCard({ offer }: Props) {
             />
           </figure>
           <div className=" rounded-b-md bg-accent px-0 m-0">
-            <h1 className="card-title text-5xl font-normal justify-center text-center py-4 text-info mx-auto">
+            <h1 className="card-title text-4xl md:text-5xl font-normal justify-center text-center py-4 text-info mx-auto">
               {store.name.toUpperCase()}
             </h1>
             <div className="flex flex-col gap-4">

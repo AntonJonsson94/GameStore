@@ -25,7 +25,7 @@ export default function Carousel({ content, onNext, onPrev }: Props) {
   };
 
   return (
-    <div className="relative mx-auto">
+    <div className="relative w-fit mx-auto">
       <button className="absolute -left-6 top-1/2" onClick={handlePrevious}>
         <Image
           priority
@@ -46,11 +46,11 @@ export default function Carousel({ content, onNext, onPrev }: Props) {
       </button>
 
       <Image
-        className="w-[1000px] h-[600px]"
+        className="w-[1080px] h-[600px]"
         priority
         src={content[activeIndex]}
         height={600}
-        width={1000}
+        width={1080}
         alt=""
       />
     </div>

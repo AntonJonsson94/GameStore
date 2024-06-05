@@ -4,6 +4,7 @@ import Divider from "@/app/components/Divider";
 import StoreCard from "@/app/components/StoreCard";
 import { IGame } from "@/models/interfaces";
 import Link from "next/link";
+import Image from "next/image";
 import { useEffect, useMemo, useState } from "react";
 
 export default function GamePage({ params }: { params: { id: string } }) {
@@ -22,14 +23,28 @@ export default function GamePage({ params }: { params: { id: string } }) {
       )),
     [game]
   );
+
   return (
     <>
       {game ? (
         <>
           <Carousel content={game.screenshots} />
+          <section className="hidden md:flex flex-row justify-between mt-16">
+            {game?.screenshots.map((s: string, index: number) => (
+              <Image
+                onClick={() => console.log(index)}
+                priority
+                key={s}
+                src={s}
+                height={100}
+                width={100}
+                alt=""
+              />
+            ))}
+          </section>
           <section
             id="game-info"
-            className="flex mt-6 flex-column justify-between"
+            className="flex flex-col md:flex-row mt-6 justify-between"
           >
             <h1 className="text-6xl text-info w-1/2">{game.title}</h1>
             <p>
