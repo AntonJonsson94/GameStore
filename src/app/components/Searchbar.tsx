@@ -3,7 +3,7 @@ import { useRouter } from "next/navigation";
 
 export default function Searchbar() {
   const [inputValue, setInputValue] = useState("");
-  const [placeholder, setPlaceholder] = useState("Search for a Game");
+  const [placeholder, setPlaceholder] = useState("Search for a good deal...");
   const router = useRouter();
 
   const useDebounce = (value: string, delay: number) => {
@@ -43,16 +43,17 @@ export default function Searchbar() {
     if (debouncedInputValue) {
       handleSearchNavigation(debouncedInputValue);
     }
-  }, [debouncedInputValue]);
+  });
 
   return (
     <div className="flex flex-col justify-center items-center">
       <input
         type="text"
         placeholder={placeholder}
-        className="input input-bordered input-primary input-lg w-full max-w-xs rounded-full mt-1 text-center"
+        className="input input-info input-lg rounded-full m-2 font-bold text-white placeholder-white border-none h-20"
         onChange={handleInputChange}
         value={inputValue}
+        style={{ width: "75vw", maxWidth: "960px", backgroundColor: "#d10382" }}
       />
     </div>
   );

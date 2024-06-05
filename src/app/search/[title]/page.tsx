@@ -3,6 +3,7 @@ import React, { useEffect, useState } from "react";
 import { IGame } from "@/models/interfaces";
 import Card from "@/app/components/Card";
 import Loader from "@/app/components/Loader";
+import Searchbar from "@/app/components/Searchbar";
 
 type Params = {
   title: string;
@@ -38,14 +39,15 @@ export default function SearchResults({ params }: { params: Params }) {
 
 
   return (
-    <section className="flex flex-wrap justify-center items-center p-10 h-auto">
+    <section className="flex flex-col justify-center items-center p-10 h-auto">
+      <Searchbar />
       {loading ? (
-        <div className="flex flex-col items-center">
+        <div className="flex flex-col items-center mt-10">
           <Loader />
           <p className="mt-2">Searching for games...</p>
         </div>
       ) : (
-        <div className="grid grid-flow-rows gap-4 grid-cols-1 md:grid-cols-3 m-auto justify-center">
+        <div className="grid grid-flow-rows gap-4 grid-cols-1 md:grid-cols-3 m-auto justify-center mt-10">
           {games.length > 0 ? (
             games.map((game: IGame, index: number) => (
               <Card game={game} key={index} />
@@ -59,5 +61,6 @@ export default function SearchResults({ params }: { params: Params }) {
       )}
     </section>
   );
+
   
 }
