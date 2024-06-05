@@ -53,14 +53,13 @@ export default async function GamePage({ params }: { params: { id: string } }) {
       <Divider />
 
       <h1 className="text-5xl text-info">MORE DEALS</h1>
-      <div className="mt-6 flex justify-center">
-      <div className="mt-6 flex justify-center">
-  <div className="grid grid-cols-1 sm:grid-cols-1 md:grid-cols-1 lg:grid-cols-2 xl:grid-cols-3 gap-4">
+      <div className="mt-6 flex justify-evenly">
+      
+  <div className="grid grid-cols-1 sm:grid-cols-1 md:grid-cols-1 lg:grid-cols-2 xl:grid-cols-3 gap-16">
     {offers}
   </div>
 </div>
 
-</div>
 
     </>
   );
