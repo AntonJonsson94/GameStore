@@ -21,7 +21,7 @@ export default async function GamePage({ params }: { params: { id: string } }) {
   return (
     <>
       <section id="game-info" className="flex mt-6 flex-column justify-between">
-      <h1 className={` text-${game.title.length > 20 ? '4xl' : '8xl'} text-info w-1/2`}>
+      <h1 className={"text-info w-1/2 text-6xl"}>
   {game.title}
 </h1>
 
