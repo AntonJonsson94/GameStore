@@ -1,9 +1,10 @@
 "use client";
 import { IGame } from "@/models/interfaces";
 import Card from "./components/Card";
-import { useCallback, useEffect, useMemo, useState } from "react";
+import { useCallback, useEffect, useState } from "react";
 import Carousel from "./components/Carousel";
 import Link from "next/link";
+import Searchbar from "./components/Searchbar";
 import Loader from "./components/Loader";
 
 export default function FrontPage() {
@@ -50,6 +51,7 @@ export default function FrontPage() {
 
   return (
     <>
+      <Searchbar />
       {!loading ? (
         <section className="flex flex-wrap place-items-center p-10 h-auto">
           <div className="card card-compact  bg-accent rounded-none border-secondary border-2 mb-10 w-full shadow-xl">
@@ -74,7 +76,7 @@ export default function FrontPage() {
               </div>
             </div>
           </div>
-          <div className="grid grid-flow-rows gap-4 grid-cols-1 md:grid-cols-3 m-auto h-auto justify-center">
+          <div className="grid grid-flow-rows gap-4 grid-cols-1 md:grid-cols-3 m-auto h-auto justify-center mt-10">
             {games &&
               games.map((game: IGame, index: number) => (
                 <Card game={game} key={index} />
@@ -82,7 +84,10 @@ export default function FrontPage() {
           </div>
         </section>
       ) : (
-        <Loader />
+        <div className="flex flex-col items-center mt-10">
+          <Loader />
+          <p className="mt-2">Loading games...</p>
+        </div>
       )}
     </>
   );
