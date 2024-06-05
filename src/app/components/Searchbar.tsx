@@ -50,10 +50,10 @@ export default function Searchbar() {
       <input
         type="text"
         placeholder={placeholder}
-        className="input input-info input-lg rounded-full m-2 font-bold text-white placeholder-white border-none h-20"
+        className="input input-info input-lg rounded-full m-2 font-bold text-info placeholder-info border-none h-20"
         onChange={handleInputChange}
         value={inputValue}
-        style={{ width: "75vw", maxWidth: "960px", backgroundColor: "#d10382" }}
+        style={{ width: "75vw", maxWidth: "960px", backgroundColor: "#d10382", fontSize: "20px", }}
       />
     </div>
   );
