@@ -33,7 +33,6 @@ export default function GamePage({ params }: { params: { id: string } }) {
           <section className="hidden md:flex flex-row justify-between mt-16">
             {game?.screenshots.map((s: string, index: number) => (
               <Image
-                onClick={() => console.log(index)}
                 priority
                 key={s}
                 src={s}
@@ -79,9 +78,9 @@ export default function GamePage({ params }: { params: { id: string } }) {
             <>
               <h1 className="text-5xl text-info">MORE DEALS</h1>
               <div className="flex justify-center mt-6">
-              <div className="grid grid-cols-1 sm:grid-cols-1 md:grid-cols-1 lg:grid-cols-2 xl:grid-cols-3 gap-16">
-                {offers}
-              </div>
+                <div className="grid grid-cols-1 sm:grid-cols-1 md:grid-cols-1 lg:grid-cols-2 xl:grid-cols-3 gap-16">
+                  {offers}
+                </div>
 
               </div>
             </>
