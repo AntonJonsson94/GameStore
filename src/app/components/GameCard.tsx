@@ -6,7 +6,7 @@ type CardProps = {
   game: IGame;
 };
 
-const Card = ({ game }: CardProps) => {
+const GameCard = ({ game }: CardProps) => {
   return (
     <article className="card   shadow-xl border-2 border-secondary rounded-none bg-accent">
       <figure className="px-10 pt-10">
@@ -30,7 +30,7 @@ const Card = ({ game }: CardProps) => {
           <div className="divider divider-info m-1 w-full"></div>
         </div>
         <p className="h-16 overflow-hidden overflow-ellipsis m-2">
-          {game.description}
+          {game.short}
         </p>
         <div className="card-actions justify-end">
           <Link target="_blank" href={game.cheapest_link}>
@@ -44,4 +44,4 @@ const Card = ({ game }: CardProps) => {
   );
 };
 
-export default Card;
+export default GameCard;

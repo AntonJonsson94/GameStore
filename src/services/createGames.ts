@@ -72,7 +72,7 @@ export async function createGame(cheapSharkGame: ICheapSharkGame) {
       store_offers: store_offers,
       discount: cheapSharkGame.savings,
       cheapest_link: `https://www.cheapshark.com/redirect?dealID=${cheapSharkGame.dealID}`,
-      short: igdbGame.summary?.split(".")[0]
+      short: igdbGame.summary?.split(/[.!?]/)[0]
     });
     newGame.save();
     return newGame;

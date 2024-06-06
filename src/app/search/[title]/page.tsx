@@ -1,7 +1,7 @@
 "use client";
 import React, { useEffect, useState } from "react";
 import { IGame } from "@/models/interfaces";
-import Card from "@/app/components/Card";
+import GameCard from "@/app/components/GameCard";
 import Loader from "@/app/components/Loader";
 import Searchbar from "@/app/components/Searchbar";
 import Divider from "@/app/components/Divider";
@@ -19,7 +19,7 @@ export default function SearchResults({ params }: { params: Params }) {
   useEffect(() => {
     const fetchGames = async () => {
       setLoading(true);
-    
+
       try {
         const response = await fetch(`/api/search/${title}`);
         if (!response.ok) {
@@ -42,7 +42,7 @@ export default function SearchResults({ params }: { params: Params }) {
   return (
     <section className="flex flex-col justify-center items-center p-10 h-auto">
       <Searchbar />
-      <Divider/>
+      <Divider />
       {loading ? (
         <div className="flex flex-col items-center mt-10">
           <Loader />
@@ -52,7 +52,7 @@ export default function SearchResults({ params }: { params: Params }) {
         <div className="grid grid-flow-rows gap-4 grid-cols-1 md:grid-cols-3 m-auto justify-center mt-10">
           {games.length > 0 ? (
             games.map((game: IGame, index: number) => (
-              <Card game={game} key={index} />
+              <GameCard game={game} key={index} />
             ))
           ) : (
             <div className="flex flex-wrap items-center p-10">
@@ -64,5 +64,5 @@ export default function SearchResults({ params }: { params: Params }) {
     </section>
   );
 
-  
+
 }

@@ -1,6 +1,6 @@
 "use client";
 import { IGame } from "@/models/interfaces";
-import Card from "./components/Card";
+import GameCard from "./components/GameCard";
 import { useCallback, useEffect, useState } from "react";
 import Carousel from "./components/Carousel";
 import Link from "next/link";
@@ -79,7 +79,7 @@ export default function FrontPage() {
           <div className="grid grid-flow-rows gap-4 grid-cols-1 md:grid-cols-3 m-auto h-auto justify-center mt-10">
             {games &&
               games.map((game: IGame, index: number) => (
-                <Card game={game} key={index} />
+                <GameCard game={game} key={index} />
               ))}
           </div>
         </section>
