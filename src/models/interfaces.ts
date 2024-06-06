@@ -17,6 +17,7 @@ export interface IGame {
   discount: string;
   cheapest_link: string;
   short: string;
+  isSale: boolean;
 }
 
 export interface IGDBGame {

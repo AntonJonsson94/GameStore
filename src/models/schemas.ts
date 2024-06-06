@@ -31,7 +31,8 @@ const GameSchema = new Schema<IGame>({
   store_offers: { type: [StoreOfferSchema], required: true },
   discount: { type: String, required: true },
   cheapest_link: { type: String, required: true },
-  short: { type: String, required: true }
+  short: { type: String, required: true },
+  isSale: { type: Boolean, required: true }
 });
 
 const StoreSchema = new Schema<IStore>({

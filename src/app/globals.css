@@ -32,4 +32,8 @@ html {
   input {
     @apply font-poppins;
   }
+
+  input:placeholder-shown {
+    font-style: italic;
+  }
 }

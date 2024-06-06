@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from "react";
+import Image from "next/image";
 import { useRouter } from "next/navigation";
 
 export default function Searchbar() {
@@ -46,15 +47,9 @@ export default function Searchbar() {
   });
 
   return (
-    <div className="flex flex-col justify-center items-center">
-      <input
-        type="text"
-        placeholder={placeholder}
-        className="input input-info input-lg rounded-full m-2 font-bold text-info placeholder-info border-none h-20"
-        onChange={handleInputChange}
-        value={inputValue}
-        style={{ width: "75vw", maxWidth: "960px", backgroundColor: "#d10382", fontSize: "20px", }}
-      />
-    </div>
+    <label className="input lg:input-lg w-11/12 mx-auto  border-none rounded-full bg-primary flex items-center gap-2">
+      <input type="text" className="grow placeholder-info text-info" placeholder="Search for a good deal..." onChange={handleInputChange} />
+      <Image src={"/img/search.svg"} alt="Search icon" width={30} height={30} />
+    </label>
   );
 }
