@@ -30,18 +30,6 @@ export default function GamePage({ params }: { params: { id: string } }) {
       {game ? (
         <>
           <Carousel content={game.screenshots} />
-          <section className="hidden md:flex flex-row justify-between mt-16">
-            {game?.screenshots.map((s: string, index: number) => (
-              <Image
-                priority
-                key={s}
-                src={s}
-                height={100}
-                width={100}
-                alt=""
-              />
-            ))}
-          </section>
           <section
             id="game-info"
             className="flex flex-col md:flex-row mt-6 justify-between"
