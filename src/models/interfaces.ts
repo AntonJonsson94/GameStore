@@ -16,6 +16,7 @@ export interface IGame {
   metacritic_score: string;
   discount: string;
   cheapest_link: string;
+  short: string;
 }
 
 export interface IGDBGame {

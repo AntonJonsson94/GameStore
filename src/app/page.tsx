@@ -11,7 +11,7 @@ export default function FrontPage() {
   const [games, setGames] = useState<IGame[]>();
   const [screenshots, setScreenshots] = useState<string[]>([]);
   const [title, setTitle] = useState<string[]>([]);
-  const [desc, setDesc] = useState<string[]>([]);
+  const [short, setShort] = useState<string[]>([]);
   const [cheapLink, setCheapLink] = useState<string[]>([]);
   const [gameIds, setGameIds] = useState<string[]>([]);
 
@@ -25,7 +25,7 @@ export default function FrontPage() {
         setGames(games);
         games.map((game: IGame) => {
           setScreenshots((prev: string[]) => [...prev, game.splash_art]);
-          setDesc((prev: string[]) => [...prev, game.description]);
+          setShort((prev: string[]) => [...prev, game.short]);
           setTitle((prev: string[]) => [...prev, game.title]);
           setCheapLink((prev: string[]) => [...prev, game.cheapest_link]);
           setGameIds((prev: string[]) => [...prev, game._id.toString()]);
@@ -37,16 +37,16 @@ export default function FrontPage() {
   const handleNext = useCallback(
     () =>
       setIndex((prevIndex) =>
-        prevIndex === desc.length - 1 ? 0 : prevIndex + 1
+        prevIndex === short.length - 1 ? 0 : prevIndex + 1
       ),
-    [desc.length]
+    [short.length]
   );
   const handlePrev = useCallback(
     () =>
       setIndex((prevIndex) =>
-        prevIndex === 0 ? desc.length - 1 : prevIndex - 1
+        prevIndex === 0 ? short.length - 1 : prevIndex - 1
       ),
-    [desc.length]
+    [short.length]
   );
 
   return (
@@ -66,7 +66,7 @@ export default function FrontPage() {
               <Link href={`/game/${gameIds[index]}`}>
                 <h2 className="text-5xl">{title[index]}</h2>
               </Link>
-              <p>{desc[index]}</p>
+              <p>{short[index]}</p>
               <div className="card-actions justify-end">
                 <Link target="_blank" href={cheapLink[index]}>
                   <button className="btn btn-primary btn-wide rounded-full">
