@@ -78,8 +78,11 @@ export default function GamePage({ params }: { params: { id: string } }) {
           {offers ? (
             <>
               <h1 className="text-5xl text-info">MORE DEALS</h1>
-              <div className="mt-6 grid gap-16 grid-cols-1 md:grid-cols-3">
+              <div className="flex justify-center mt-6">
+              <div className="grid grid-cols-1 sm:grid-cols-1 md:grid-cols-1 lg:grid-cols-2 xl:grid-cols-3 gap-16">
                 {offers}
+              </div>
+
               </div>
             </>
           ) : (
