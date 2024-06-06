@@ -17,16 +17,15 @@ export async function createGame(cheapSharkGame: ICheapSharkGame) {
   const store_offers: IStoreOffer[] = deals.map((deal) => {
     return {
       ...deal,
-      link: `https://www.cheapshark.com/redirect?dealID=${deal.dealID}`,
+      link: `https://www.cheapshark.com/redirect?dealID=${deal.dealID}`
     };
   });
-
   if (igdbRes.length > 0) {
     const igdbGame = igdbRes[0];
     const screenshotUrls =
       igdbGame.screenshots?.map(
         (screenshot) =>
-          `https://images.igdb.com/igdb/image/upload/t_1080p/${screenshot.image_id}.jpg`
+          `https://images.igdb.com/igdb/image/upload/t_screenshot_huge_2x/${screenshot.image_id}.jpg`
       ) || [];
 
     const artworkUrls =
@@ -72,7 +71,7 @@ export async function createGame(cheapSharkGame: ICheapSharkGame) {
       videos: videoUrls,
       store_offers: store_offers,
       discount: cheapSharkGame.savings,
-      cheapest_link: `https://www.cheapshark.com/redirect?dealID=${cheapSharkGame.dealID}`,
+      cheapest_link: `https://www.cheapshark.com/redirect?dealID=${cheapSharkGame.dealID}`
     });
 
     newGame.save();
