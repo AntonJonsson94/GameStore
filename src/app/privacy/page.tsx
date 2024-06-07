@@ -52,7 +52,7 @@ export default function Privacy() {
         <p>We have no control over and assume no responsibility for the content, privacy policies, or practices of any third-party sites or services.</p>
       </section>
       <section>
-        <h3>Children's Privacy</h3>
+        <h3>Children&apos;s Privacy</h3>
         <p>Value Town does not knowingly collect any information from anyone under the age of 13. If you are a parent or guardian and believe that your child has provided us with information, please contact us so we can take appropriate action.</p>
       </section>
       <section>
