@@ -4,7 +4,7 @@ import { useRouter } from "next/navigation";
 
 export default function Searchbar() {
   const [inputValue, setInputValue] = useState("");
-  const [placeholder, setPlaceholder] = useState("Search for a good deal...");
+  const [placeholder, setPlaceholder] = useState("Search");
   const router = useRouter();
 
   const useDebounce = (value: string, delay: number) => {
@@ -47,9 +47,9 @@ export default function Searchbar() {
   });
 
   return (
-    <label className="input lg:input-lg w-11/12 mx-auto  border-none rounded-full bg-primary flex items-center gap-2">
-      <input type="text" className="grow placeholder-info text-info" placeholder="Search for a good deal..." onChange={handleInputChange} />
-      <Image src={"/img/search.svg"} alt="Search icon" width={30} height={30} />
+    <label className="input input-sm lg:input-lg w-4/5 md:w-11/12 mx-auto  border-none rounded-full bg-primary flex items-center gap-2">
+      <input type="text" className="grow placeholder-info text-info" placeholder={placeholder} onChange={handleInputChange} />
+      <Image src={"/img/search.svg"} alt="Search icon" className="w-4 h-4 md:w-10 md:h-10" width={30} height={30} />
     </label>
   );
 }

@@ -6,6 +6,7 @@ import Carousel from "./components/Carousel";
 import Link from "next/link";
 import Searchbar from "./components/Searchbar";
 import Loader from "./components/Loader";
+import Divider from "./components/Divider";
 
 export default function FrontPage() {
   const [games, setGames] = useState<IGame[]>();
@@ -55,7 +56,7 @@ export default function FrontPage() {
       {!loading ? (
         <section className="flex flex-wrap place-items-center p-10 h-auto">
           <div className="card card-compact  bg-accent rounded-none border-secondary border-2 mb-10 w-full shadow-xl">
-            <figure className="py-6">
+            <figure className="px-10 py-6">
               <Carousel
                 content={screenshots}
                 onNext={handleNext}
@@ -69,13 +70,14 @@ export default function FrontPage() {
               <p>{short[index]}</p>
               <div className="card-actions justify-end">
                 <Link target="_blank" href={cheapLink[index]}>
-                  <button className="btn btn-primary btn-wide rounded-full">
+                  <button className="btn btn-primary md:btn-wide rounded-full">
                     Buy Now
                   </button>
                 </Link>
               </div>
             </div>
           </div>
+          <Divider />
           <div className="grid grid-flow-rows gap-4 grid-cols-1 md:grid-cols-3 m-auto h-auto justify-center mt-10">
             {games &&
               games.map((game: IGame, index: number) => (

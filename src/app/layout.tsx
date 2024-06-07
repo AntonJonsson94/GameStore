@@ -15,7 +15,7 @@ export default function RootLayout({
     <html data-theme="gamerTheme" lang="en">
       <body className={`${inter.className}`}>
         <Header />
-        <main className="w-2/3 mx-auto">{children}</main>
+        <main className="w-10/12 md:w-2/3 mx-auto">{children}</main>
         <Footer />
       </body>
     </html>

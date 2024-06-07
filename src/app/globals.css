@@ -4,15 +4,17 @@
 @tailwind components;
 @tailwind utilities;
 
-html {
-  background: rgb(23, 33, 68, 1);
-  background: radial-gradient(
-    circle at -15% -15%,
-    rgba(6, 152, 152, 1) 55%,
-    rgba(23, 33, 68, 1) 55%
-  );
-  background-size: 70vw 200vh;
-  background-repeat: no-repeat;
+@screen sm {
+  html {
+    background: rgb(23, 33, 68, 1);
+    background: radial-gradient(
+      circle at -15% -15%,
+      rgba(6, 152, 152, 1) 55%,
+      rgba(23, 33, 68, 1) 55%
+    );
+    background-size: 70vw 200vh;
+    background-repeat: no-repeat;
+  }
 }
 
 @layer components {

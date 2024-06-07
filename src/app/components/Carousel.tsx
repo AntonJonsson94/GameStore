@@ -26,8 +26,9 @@ export default function Carousel({ content, onNext, onPrev }: Props) {
 
   return (
     <div className="relative w-fit mx-auto">
-      <button className="absolute -left-6 top-1/2" onClick={handlePrevious}>
+      <button className="absolute  -left-6 top-1/2" onClick={handlePrevious}>
         <Image
+          className="w-6 h-auto md:w-12"
           priority
           alt=""
           width={40}
@@ -37,6 +38,7 @@ export default function Carousel({ content, onNext, onPrev }: Props) {
       </button>
       <button className="absolute -right-6  top-1/2" onClick={handleNext}>
         <Image
+          className="w-6 h-auto md:w-12"
           priority
           alt="next"
           width={40}
@@ -46,7 +48,7 @@ export default function Carousel({ content, onNext, onPrev }: Props) {
       </button>
 
       <Image
-        className="w-[1080px] h-[600px]"
+        className="w-64 h-auto md:w-[1080px] md:h-[600px]"
         priority
         src={content[activeIndex]}
         height={600}

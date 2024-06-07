@@ -8,7 +8,7 @@ type CardProps = {
 
 const GameCard = ({ game }: CardProps) => {
   return (
-    <article className="card   shadow-xl border-2 border-secondary rounded-none bg-accent">
+    <article className="card shadow-xl border-2 border-secondary rounded-none bg-accent">
       <figure className="p-6">
         <div className="w-full h-32">
           <Image
@@ -21,7 +21,7 @@ const GameCard = ({ game }: CardProps) => {
           />
         </div>
       </figure>
-      <div className={`divider divider-info w-3/4 mx-auto`}></div>
+      <div className={`divider divider-info my-0 md:my-4 w-3/4 mx-auto`}></div>
       <div className="card-body ">
         <div className="flex flex-col items-start">
           <Link href={`/game/${game._id}`}>
