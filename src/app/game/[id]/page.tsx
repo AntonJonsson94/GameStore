@@ -29,7 +29,7 @@ export default function GamePage({ params }: { params: { id: string } }) {
     <>
       {game ? (
         <>
-          <Carousel content={game.screenshots} />
+          <Carousel content={[game.splash_art, ...game.screenshots]} />
           <section
             id="game-info"
             className="flex flex-col md:flex-row mt-6 justify-between"
