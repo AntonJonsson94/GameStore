@@ -34,9 +34,9 @@ export default function GamePage({ params }: { params: { id: string } }) {
             id="game-info"
             className="flex flex-col md:flex-row mt-6 justify-between"
           >
-            <h1 className="text-6xl text-info w-1/2">{game.title}</h1>
+            <h1 className="text-6xl text-info md:w-1/2">{game.title}</h1>
             <p>
-              <h1 className="text-info text-5xl">BEST PRICE</h1>
+              <h1 className="text-info text-5xl my-2 md:my-0">BEST PRICE</h1>
               <span className="stroke-current text-info line-through">
                 {game.full_price}
               </span>{" "}
