@@ -12,17 +12,16 @@ const GameCard = ({ game }: CardProps) => {
       <figure className="p-6">
         <div className="w-full h-32">
           <Image
-            priority
+            className="w-full h-32"
             width={200}
             height={128}
             src={game.splash_art}
             alt={game.splash_art}
-            className="w-full"
           />
         </div>
       </figure>
-      <div className={`divider divider-info my-0 md:my-4 w-3/4 mx-auto`}></div>
-      <div className="card-body ">
+      <div className={`divider divider-info my-0 xl:my-4 w-3/4 mx-auto`}></div>
+      <div className="card-body py-4 xl:p-8 ">
         <div className="flex flex-col items-start">
           <Link href={`/game/${game._id}`}>
             <h2 className="card-title mb-5">{game.title}</h2>
