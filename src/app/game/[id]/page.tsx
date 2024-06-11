@@ -4,7 +4,6 @@ import Divider from "@/app/components/Divider";
 import StoreCard from "@/app/components/StoreCard";
 import { IGame } from "@/models/interfaces";
 import Link from "next/link";
-import Image from "next/image";
 import { useEffect, useMemo, useState } from "react";
 import Loader from "@/app/components/Loader";
 

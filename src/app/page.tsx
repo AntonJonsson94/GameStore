@@ -56,7 +56,7 @@ export default function FrontPage() {
       {!loading ? (
         <section className="flex flex-wrap place-items-center p-10 h-auto">
           <div className="card card-compact  bg-accent rounded-none border-secondary border-2 mb-10 w-full shadow-xl">
-            <figure className="px-10 py-6">
+            <figure className="px-10 md:h-[300px] py-6">
               <Carousel
                 content={screenshots}
                 onNext={handleNext}
@@ -78,7 +78,7 @@ export default function FrontPage() {
             </div>
           </div>
           <Divider />
-          <div className="grid grid-flow-rows gap-4 grid-cols-1 md:grid-cols-3 m-auto h-auto justify-center mt-10">
+          <div className="grid grid-flow-rows gap-4 grid-cols-1 md:grid-cols-2 xl:grid-cols-3 m-auto h-auto justify-center mt-10">
             {games &&
               games.map((game: IGame, index: number) => (
                 <GameCard game={game} key={index} />
